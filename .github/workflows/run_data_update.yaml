@@ -37,7 +37,8 @@ jobs:
         run: |
           git add mp_lookup.csv
           if ! git diff-index --quiet HEAD; then
-            git config --local user.email ""
+            git config --local user.email "github-actions[bot]@users.noreply.github.com"
             git config --local user.name "GitHub Action"
             git commit -m "Automatic update of mp_lookup.csv"
             git push
+          fi
