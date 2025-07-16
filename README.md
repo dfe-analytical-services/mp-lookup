@@ -6,12 +6,12 @@ This is a quick stop-gap, long term this will hopefully be made available from a
 
 ## How to use
 
-The look up file is available as a CSV file you can [view and download from the repository]().
+The look up file is available as a CSV file you can [view and download from the repository](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv).
 
 If you want to use this programmatically (e.g. R or Python), you can use the raw URL:
 
 ```
-https://raw.githubusercontent.com/dfe-analystical-services/mp-lookup/main/mp_lookup.csv
+https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv
 ```
 
 ## Sources
@@ -34,4 +34,4 @@ Updates are done automatically every Monday morning using GitHub Actions.
 
 ## Contact and requests
 
-If you have any questions, or requests for additional data or changes to the existing data, please [raise an issue]() on this repository.
+If you have any questions, or requests for additional data or changes to the existing data, please [raise an issue](https://github.com/dfe-analytical-services/mp-lookup/issues/new/choose) on this repository.
