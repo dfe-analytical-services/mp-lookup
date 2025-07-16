@@ -1,13 +1,14 @@
 name: Run R Script and Commit CSV
 
 on:
+  workflow_dispatch:
   schedule:
     #- cron: '0 7 * * 1' # 7am each Monday
     - cron: '0 * * * *' # every hour (for testing)
 
 jobs:
   run-update-and-commit:
-    runs-on: ubuntu-latest
+    runs-on: windows-latest
     permissions:
       contents: write
       actions: read
@@ -32,8 +33,9 @@ jobs:
           
       - name: Commit CSV file
         run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add mp_lookup.csv
-          git commit -m "Add updated mp_lookup.csv"
-          git push
+          if ! git diff-index --quiet HEAD; then
+            git config --local user.email ""
+            git config --local user.name "GitHub Action"
+            git commit -m "Updated mp_lookup.csv"
+            git push
