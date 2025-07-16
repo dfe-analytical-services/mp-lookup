@@ -1,10 +1,9 @@
 name: Run R Script and Commit CSV
 
 on:
-  workflow_dispatch:
+  workflow_dispatch: # Allow manual triggering
   schedule:
-    #- cron: '0 7 * * 1' # 7am each Monday
-    - cron: '0 * * * *' # every hour (for testing)
+    - cron: '0 7 * * 1' # 7am each Monday
 
 jobs:
   run-update-and-commit:
@@ -24,6 +23,8 @@ jobs:
           Rscript -e 'install.packages(c("dfeR", "dplyr", "tidyr", "testthat", "devtools"))'
 
       - name: Install mnis package
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           Rscript -e 'devtools::install_github("EvanOdell/mnis")'
 
@@ -32,10 +33,11 @@ jobs:
           Rscript data_update.R    
           
       - name: Commit CSV file
+        shell: bash
         run: |
           git add mp_lookup.csv
           if ! git diff-index --quiet HEAD; then
             git config --local user.email ""
             git config --local user.name "GitHub Action"
-            git commit -m "Updated mp_lookup.csv"
+            git commit -m "Automatic update of mp_lookup.csv"
             git push
