@@ -1,0 +1,39 @@
+name: Run R Script and Commit CSV
+
+on:
+  schedule:
+    #- cron: '0 7 * * 1' # 7am each Monday
+    - cron: '0 * * * *' # every hour (for testing)
+
+jobs:
+  run-update-and-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      actions: read
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install R packages
+        run: |
+          Rscript -e 'install.packages(c("dfeR", "dplyr", "tidyr", "testthat", "devtools"))'
+
+      - name: Install mnis package
+        run: |
+          Rscript -e 'devtools::install_github("EvanOdell/mnis")'
+
+      - name: Run main data update
+        run: |
+          Rscript data_update.R    
+          
+      - name: Commit CSV file
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add mp_lookup.csv
+          git commit -m "Add updated mp_lookup.csv"
+          git push
