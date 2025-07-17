@@ -30,7 +30,7 @@ If you need anything else from the [Open Geography Portal](https://geoportal.sta
 
 ## Updates
 
-Updates are done automatically every Monday morning using GitHub Actions.
+Updates are done automatically every Monday morning using GitHub Actions, these check for any changes in the MP data, and will overwrite the file with a newer version if there are.
 
 ## Contact and requests
 
