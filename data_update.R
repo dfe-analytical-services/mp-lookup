@@ -6,17 +6,20 @@ library(testthat)
 
 # Create lookup ===============================================================
 mp_lookup <- dfeR::fetch_pcons(2024, "England") |>
+  dplyr::mutate(pcon_name_lower = tolower(pcon_name)) |>
   dplyr::left_join(
     mnis::mnis_mps_on_date() |>
-      dplyr::select(full_title, display_as, member_from, party_text),
-    by = c("pcon_name" = "member_from")
+      dplyr::select(full_title, display_as, member_from, party_text) |>
+      dplyr::mutate(member_from = tolower(member_from)),
+    by = c("pcon_name_lower" = "member_from")
   ) |>
   dplyr::mutate(
     dplyr::across(
       c(full_title, display_as, party_text),
       ~ tidyr::replace_na(.x, "Vacant")
     )
-  )
+  ) |>
+  dplyr::select(-pcon_name_lower)
 
 # QA ==========================================================================
 test_that("mp_lookup has expected columns", {
@@ -38,7 +41,8 @@ test_that("No duplicate rows", {
   expect_true(nrow(mp_lookup) == nrow(dplyr::distinct(mp_lookup)))
 })
 
-test_that("There are 543 rows", { # same number as we know from dfeR pcons
+test_that("There are 543 rows", {
+  # same number as we know from dfeR pcons
   expect_true(nrow(mp_lookup) == 543)
 })
 
