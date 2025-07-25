@@ -91,6 +91,7 @@ extract_email <- function(mnis_base_output_line) {
   member_emails <- mnis_base_output_line |>
     magrittr::extract2("Addresses.Address") |>
     magrittr::extract2("Email")
+  # Remove NAs, trim spaces, switch to lower case and remove duplicates
   member_emails <- member_emails[!is.na(member_emails)] |>
     stringr::str_trim() |>
     tolower() |>
