@@ -4,8 +4,7 @@ on:
   workflow_dispatch: # Allow manual triggering
   schedule:
     - cron: '0 7 * * 1' # 7am each Monday
-  pull-request:
-    - main
+  pull_request:
 
 jobs:
   run-update-and-commit:
