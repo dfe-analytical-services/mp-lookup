@@ -35,6 +35,7 @@ jobs:
           Rscript data_update.R
 
       - name: Commit CSV file
+        if: github.event_name != 'pull_request'
         shell: bash
         run: |
           git add mp_lookup.csv
