@@ -1,6 +1,7 @@
 library(mnis)
 library(dfeR)
 library(dplyr)
+library(readr)
 library(tidyr)
 library(testthat)
 
@@ -43,6 +44,41 @@ mp_lookup <- mp_lookup |>
   ) |>
   dplyr::select(-pcon_name_lower, member_id)
 
+# Read in election results and add them on =================================
+
+election_results <- readr::read_csv("candidate-level-results-general-election-04-07-2024.csv") |>
+  # Clean column names to snake case
+  janitor::clean_names() |>
+  #create a column to standardise constituency names so the join works without
+  #case sensitivity becoming an issue
+  dplyr::mutate(
+    constituency_name = tolower(constituency_name)
+  ) |>
+  # Select relevant columns
+  dplyr::select(
+    pcon_code = constituency_geographic_code,
+    pcon_name_join =constituency_name,
+    election_result_summary_2024 = election_result_summary
+  )
+
+# join the data
+mp_lookup <- mp_lookup |>
+  #create a column to standardise constituency names so the join works without
+  #case sensitivity becoming an issue
+  dplyr::mutate(
+    pcon_name_join = tolower(pcon_name)
+  ) |>
+  # Join with election results
+  dplyr::left_join(election_results, by = c("pcon_code",
+                                            "pcon_name_join"
+                                            )
+                   ) |>
+  # Remove duplicates
+  dplyr::distinct() |>
+  #unselect pcon_name_join
+  dplyr::select(-pcon_name_join)
+
+
 
 # QA ==========================================================================
 test_that("mp_lookup has expected columns", {
@@ -53,7 +89,8 @@ test_that("mp_lookup has expected columns", {
       "full_title",
       "display_as",
       "party_text",
-      "member_email"
+      "member_email",
+      "election_result_summary_2024"
     ) %in%
       colnames(mp_lookup)
   ))
@@ -66,6 +103,7 @@ test_that("mp_lookup has no missing values in key columns", {
   expect_true(all(!is.na(mp_lookup$display_as)))
   expect_true(all(!is.na(mp_lookup$party_text)))
   expect_true(all(!is.na(mp_lookup$member_email)))
+  expect_true(all(!is.na(mp_lookup$election_result_summary_2024)))
 })
 
 test_that("No duplicate rows", {
