@@ -1,7 +1,6 @@
 library(mnis)
 library(dfeR)
 library(dplyr)
-library(readr)
 library(tidyr)
 library(testthat)
 
@@ -46,7 +45,7 @@ mp_lookup <- mp_lookup |>
 
 # Read in election results and add them on =================================
 
-election_results <- readr::read_csv("candidate-level-results-general-election-04-07-2024.csv") |>
+election_results <- read.csv("candidate-level-results-general-election-04-07-2024.csv") |>
   # Clean column names to snake case
   janitor::clean_names() |>
   #create a column to standardise constituency names so the join works without
