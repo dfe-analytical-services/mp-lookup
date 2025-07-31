@@ -16,7 +16,11 @@ https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/m
 
 ## Sources
 
-The MP data is sourced from the [UK Parliament API](http://data.parliament.uk/membersdataplatform/default.aspx) and the [Open Geography Portal](https://geoportal.statistics.gov.uk/) using the following R packages: - [mnis](https://docs.evanodell.com/mnis/) - [dfeR](https://github.com/dfe-analytical-services/dfeR)
+The MP data is sourced from the [UK Parliament API](http://data.parliament.uk/membersdataplatform/default.aspx) and the [Open Geography Portal](https://geoportal.statistics.gov.uk/) using the following R packages:
+
+-   [mnis](https://docs.evanodell.com/mnis/)
+
+-   [dfeR](https://github.com/dfe-analytical-services/dfeR)
 
 The election results data is sourced from the 'candidate-level general election result data' CSV file from the [UK Parliament election results page](https://electionresults.parliament.uk/general-elections/6/political-parties).
 
