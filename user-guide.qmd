@@ -1,0 +1,51 @@
+--- 
+title: "How to use the DfE's MP look-up table"
+format:
+  pdf:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    mainfont: Arial
+---
+
+```{r, echo=FALSE, include=FALSE}
+systemfonts::system_fonts()
+```
+
+
+## Introduction
+
+This document outlines how to access and use the DfE's MP Parliamentary Constituency look-up table.
+
+::: {.callout-note}
+The MP look-up table is automatically updated every Monday.
+:::
+
+## What does the MP look-up table contain?
+
+The look-up table contains a single row for each current parliamentary constituency. Each row contains the following items:
+
+- Parliamentary constituency code
+- Parliamentary constituency name
+- Member ID of current sitting MP
+- Full title of current sitting MP
+- Preferred display name of current sitting MP
+- Political party of current sitting MP
+- Primary e-mail address of current sitting MP
+- Parliamentary constituency election result from the 2024 general election
+
+## Viewing the MP look-up table
+
+The look-up table can be viewed on GitHub: 
+[mp_lookup.csv](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv).
+
+Note that you may need to scroll left to right and top to bottom to view all the available data.
+
+![](images/mp-look-up-csv_on-github.png)
+
+## Downloading the MP look-up table
+
+The latest version of the look-up table can ve downloaded from the [ direct link to mp_lookup-csv ](https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv). Alternatively, it can be downloaded by clicking the "Raw" button above [the table as displayed on GitHub](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv).
+
+This download will retrieve a CSV copy of the look-up table that can be opened in Excel and PowerBI or with developer tools such as R or Python.
+
