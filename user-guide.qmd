@@ -17,10 +17,6 @@ systemfonts::system_fonts()
 
 This document outlines how to access and use the DfE's MP Parliamentary Constituency look-up table.
 
-::: {.callout-note}
-The MP look-up table is automatically updated every Monday.
-:::
-
 ## What does the MP look-up table contain?
 
 The look-up table contains a single row for each current parliamentary constituency. Each row contains the following items:
@@ -33,6 +29,10 @@ The look-up table contains a single row for each current parliamentary constitue
 - Political party of current sitting MP
 - Primary e-mail address of current sitting MP
 - Parliamentary constituency election result from the 2024 general election
+
+::: {.callout-note}
+The MP look-up table is automatically updated every Monday.
+:::
 
 ## Viewing the MP look-up table
 
@@ -48,4 +48,17 @@ Note that you may need to scroll left to right and top to bottom to view all the
 The latest version of the look-up table can ve downloaded from the [ direct link to mp_lookup-csv ](https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv). Alternatively, it can be downloaded by clicking the "Raw" button above [the table as displayed on GitHub](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv).
 
 This download will retrieve a CSV copy of the look-up table that can be opened in Excel and PowerBI or with developer tools such as R or Python.
+
+## Reviewing recent updates to the look-up table
+
+Any recent changes can be reviewed on GitHub by viewing the [project history](https://github.com/dfe-analytical-services/mp-lookup/commits/main/).
+
+![](images/mp-look-up-history_on-github.png)
+
+Clicking on any of the listed commit titles (e.g. [Automatic update of mp_lookup.csv](https://github.com/dfe-analytical-services/mp-lookup/commit/946f0627f902a6da9659e69e9a34f423b811f08e)) will provide details of all changes made in a spcific update:
+
+![](images/mp-look-up-changes_on-github.png)
+
+The left hand column above shows the state of the look-up prior to the update and the right hand side shows the state after the update. Changes are marked in red in the previous version (left) and green in the updated version (right).
+
 
