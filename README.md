@@ -10,15 +10,19 @@ The look up file is available as a CSV file you can [view and download from the 
 
 If you want to use this programmatically (e.g. R or Python), you can use the raw URL:
 
-```
+```         
 https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv
 ```
 
 ## Sources
 
-The data is sourced from the [UK Parliament API](http://data.parliament.uk/membersdataplatform/default.aspx) and the [Open Geography Portal](https://geoportal.statistics.gov.uk/) using the following R packages:
-- [mnis](https://docs.evanodell.com/mnis/)
-- [dfeR](https://github.com/dfe-analytical-services/dfeR)
+The MP data is sourced from the [UK Parliament API](http://data.parliament.uk/membersdataplatform/default.aspx) and the [Open Geography Portal](https://geoportal.statistics.gov.uk/) using the following R packages:
+
+-   [mnis](https://docs.evanodell.com/mnis/)
+
+-   [dfeR](https://github.com/dfe-analytical-services/dfeR)
+
+The election results data is sourced from the 'candidate-level general election result data' CSV file from the [UK Parliament election results page](https://electionresults.parliament.uk/general-elections/6/political-parties).
 
 ### Other related packages
 
@@ -30,7 +34,9 @@ If you need anything else from the [Open Geography Portal](https://geoportal.sta
 
 ## Updates
 
-Updates are done automatically every Monday morning using GitHub Actions, these check for any changes in the MP data, and will overwrite the file with a newer version if there are.
+Updates about MPs are done automatically every Monday morning using GitHub Actions, these check for any changes in the MP data, and will overwrite the file with a newer version if there are.
+
+Election results data is updated manually, and will be done when the next general election is called.
 
 ## Contact and requests
 
