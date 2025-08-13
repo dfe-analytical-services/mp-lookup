@@ -57,7 +57,18 @@ quarto publish gh-pages user-guide.qmd
 Updating the pdf is performed manually using the command:
 
 ``` {r, eval=FALSE}
-quarto::quarto_render("user-guide.qmd", output_format = "pdf")
+quarto::quarto_render(
+   "user-guide.qmd", 
+   metadata = list(
+      format=list(
+         pdf=list(
+            toc = TRUE, 
+            `number-sections` = TRUE,
+            mainfont="Arial"
+         )
+      )
+   )
+)
 ```
 
 
