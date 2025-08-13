@@ -50,14 +50,21 @@ This download will retrieve a CSV copy of the look-up table that can be opened i
 
 ## Reviewing recent updates to the look-up table
 
-Any recent changes can be reviewed on GitHub by viewing the [project history](https://github.com/dfe-analytical-services/mp-lookup/commits/main/).
+Any recent changes can be reviewed on GitHub by viewing the [github-actions\[bot\] project history](https://github.com/dfe-analytical-services/mp-lookup/commits/main/?author=github-actions%5Bbot%5D).
 
 ![](images/mp-look-up-history_on-github.png)
+
+:::{.callout-warning}
+Any changes listed in the history not titled **Automatic update of mp_lookup.csv** 
+are likely to be updates to the underlying code made by the development team. 
+You can filter to just view the automated updates by selecting **github-actions[bot]**
+in place of All users from the dropdown filter at the top right of the history 
+page.
+:::
 
 Clicking on any of the listed commit titles (e.g. [Automatic update of mp_lookup.csv](https://github.com/dfe-analytical-services/mp-lookup/commit/946f0627f902a6da9659e69e9a34f423b811f08e)) will provide details of all changes made in a spcific update:
 
 ![](images/mp-look-up-changes_on-github.png)
 
 The left hand column above shows the state of the look-up prior to the update and the right hand side shows the state after the update. Changes are marked in red in the previous version (left) and green in the updated version (right).
-
 

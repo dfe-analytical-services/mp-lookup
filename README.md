@@ -58,8 +58,10 @@ Updating the pdf is performed manually using the command:
 
 ``` {r, eval=FALSE}
 quarto::quarto_render(
-   "user-guide.qmd", 
+   "user-guide.qmd",
+   output_format = "pdf",
    metadata = list(
+      papersize = "A4",
       format=list(
          pdf=list(
             toc = TRUE, 
