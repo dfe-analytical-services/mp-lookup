@@ -1,5 +1,4 @@
-# MP lookup 
-<a href="https://dfe-analytical-services.github.io/mp-lookup/"><img src="images/mp-lookup-frederick.png" align="right" height="120" alt="MP-lookup user guide" /></a>
+# MP lookup <a href="https://dfe-analytical-services.github.io/mp-lookup/"><img src="images/mp-lookup-frederick.png" align="right" height="120" alt="MP-lookup user guide" /></a>
 
 Repository that contains an up to date lookup of MPs, their constituencies, and their party affiliations.
 
