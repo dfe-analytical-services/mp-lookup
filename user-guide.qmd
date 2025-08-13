@@ -30,7 +30,7 @@ The look-up table contains a single row for each current parliamentary constitue
 - Parliamentary constituency election result from the 2024 general election
 
 ::: {.callout-note}
-The MP look-up table is automatically updated every Monday.
+The MP look-up table is automatically updated every Monday if any changes are available.
 :::
 
 ## Viewing the MP look-up table
