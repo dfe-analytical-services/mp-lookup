@@ -44,7 +44,7 @@ Note that you may need to scroll left to right and top to bottom to view all the
 
 ## Downloading the MP look-up table
 
-The latest version of the look-up table can ve downloaded from the [ direct link to mp_lookup-csv ](https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv). Alternatively, it can be downloaded by clicking the "Raw" button above [the table as displayed on GitHub](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv).
+The latest version of the look-up table can be downloaded from the [ direct link to mp_lookup-csv ](https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv). Alternatively, it can be downloaded by clicking the "Raw" button above [the table as displayed on GitHub](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv).
 
 This download will retrieve a CSV copy of the look-up table that can be opened in Excel and PowerBI or with developer tools such as R or Python.
 
