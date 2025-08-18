@@ -18,7 +18,7 @@ This document outlines how to access and use the DfE's MP Parliamentary Constitu
 
 ## What does the MP look-up table contain?
 
-The look-up table contains a single row for each current parliamentary constituency. Each row contains the following items:
+The look-up table contains a single row for each current parliamentary constituency. Each row currently contains the following items:
 
 - Parliamentary constituency code
 - Parliamentary constituency name
@@ -44,9 +44,9 @@ Note that you may need to scroll left to right and top to bottom to view all the
 
 ## Downloading the MP look-up table
 
-The latest version of the look-up table can be downloaded from the [ direct link to mp_lookup-csv ](https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv). Alternatively, it can be downloaded by clicking the "Raw" button above [the table as displayed on GitHub](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv).
+The latest version of the look-up table can be downloaded by clicking the "Download raw file" button above [the table as displayed on GitHub](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv).
 
-This download will retrieve a CSV copy of the look-up table that can be opened in Excel and PowerBI or with developer tools such as R or Python.
+This download will retrieve a CSV copy of the look-up table that can be opened in Excel and PowerBI or with developer tools such as R or Python. Alternatively if you want to connect to the data using code, use the [direct link to the raw mp_lookup.csv](https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv).
 
 ## Reviewing recent updates to the look-up table
 
@@ -57,8 +57,7 @@ Any recent changes can be reviewed on GitHub by viewing the [github-actions\[bot
 :::{.callout-warning}
 Any changes listed in the history not titled **Automatic update of mp_lookup.csv** 
 are likely to be updates to the underlying code made by the development team. 
-You can filter to just view the automated updates by selecting **github-actions[bot]**
-in place of All users from the dropdown filter at the top right of the history 
+You can filter to just view the automated updates by selecting 'github-actions[bot]' in place of 'All users' from the dropdown filter at the top right of the history 
 page.
 :::
 
@@ -67,4 +66,3 @@ Clicking on any of the listed commit titles (e.g. [Automatic update of mp_lookup
 ![](images/mp-look-up-changes_on-github.png)
 
 The left hand column above shows the state of the look-up prior to the update and the right hand side shows the state after the update. Changes are marked in red in the previous version (left) and green in the updated version (right).
-

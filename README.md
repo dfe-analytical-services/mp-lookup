@@ -40,7 +40,7 @@ Election results data is updated manually, and will be done when the next genera
 
 ## Documentation
 
-The documentation is maintained in this readme (largely aimed at maintainers) and 
+The documentation is maintained in this README (largely aimed at maintainers) and 
 [user-guide.qmd](user-guide.qmd) (aimed at end users).
 
 The user guide is kept as both a pdf and html version, with the html version 
@@ -72,7 +72,6 @@ quarto::quarto_render(
    )
 )
 ```
-
 
 ## Contact and requests
 
