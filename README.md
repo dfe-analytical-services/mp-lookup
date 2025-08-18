@@ -6,9 +6,9 @@ This is a quick stop-gap, long term this will hopefully be made available from a
 
 ## How to use
 
-The look up file is available as a CSV file you can [view and download from the repository](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv).
+The look up file is available as a CSV file you can [view and download from the repository](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv). There's a [user guide available as a webpage](https://dfe-analytical-services.github.io/mp-lookup/), and a [user guide as a downloadable PDF](https://github.com/dfe-analytical-services/mp-lookup/blob/main/user-guide.pdf) to assist you in getting what you need from the lookup file.
 
-If you want to use this programmatically (e.g. R or Python), you can use the raw URL:
+If you want to use this lookup programmatically (e.g. R or Python), you can use the raw URL:
 
 ```         
 https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv
