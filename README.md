@@ -1,4 +1,4 @@
-# MP lookup
+# MP lookup <a href="https://dfe-analytical-services.github.io/mp-lookup/"><img src="images/mp-lookup-frederick.png" align="right" height="120" alt="MP-lookup user guide" /></a>
 
 Repository that contains an up to date lookup of MPs, their constituencies, and their party affiliations.
 
@@ -37,6 +37,41 @@ If you need anything else from the [Open Geography Portal](https://geoportal.sta
 Updates about MPs are done automatically every Monday morning using GitHub Actions, these check for any changes in the MP data, and will overwrite the file with a newer version if there are.
 
 Election results data is updated manually, and will be done when the next general election is called.
+
+## Documentation
+
+The documentation is maintained in this README (largely aimed at maintainers) and 
+[user-guide.qmd](user-guide.qmd) (aimed at end users).
+
+The user guide is kept as both a pdf and html version, with the html version 
+being published to [GitHub pages](https://dfe-analytical-services.github.io/mp-lookup/) 
+via an [automated workflow](.github/workflows/github-pages.yaml).
+
+If a manual deploy of the user guide to GitHub pages is ever required, this can 
+be done using the following command in the Bash terminal:
+
+``` {sh, eval=FALSE}
+quarto publish gh-pages user-guide.qmd
+```
+
+Updating the pdf is performed manually using the command:
+
+``` {r, eval=FALSE}
+quarto::quarto_render(
+   "user-guide.qmd",
+   output_format = "pdf",
+   metadata = list(
+      papersize = "A4",
+      format=list(
+         pdf=list(
+            toc = TRUE, 
+            `number-sections` = TRUE,
+            mainfont="Arial"
+         )
+      )
+   )
+)
+```
 
 ## Contact and requests
 

@@ -1,0 +1,68 @@
+--- 
+title: "How to use the DfE's MP look-up table"
+format:
+  html:
+    toc: true
+    number-sections: true
+    colorlinks: true
+    mainfont: Arial
+---
+
+## Introduction
+
+This document outlines how to access and use the DfE's MP Parliamentary Constituency look-up table.
+
+## Quick look guide
+
+![](images/mp-look-up-on-github-overview.png)
+
+## What does the MP look-up table contain?
+
+The look-up table contains a single row for each current parliamentary constituency. Each row currently contains the following items:
+
+- Parliamentary constituency code
+- Parliamentary constituency name
+- Member ID of current sitting MP
+- Full title of current sitting MP
+- Preferred display name of current sitting MP
+- Political party of current sitting MP
+- Primary e-mail address of current sitting MP
+- Parliamentary constituency election result from the 2024 general election
+
+::: {.callout-note}
+The MP look-up table is automatically updated every Monday if any changes are available.
+:::
+
+## Viewing the MP look-up table
+
+The look-up table can be viewed on GitHub: 
+[mp_lookup.csv](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv).
+
+Note that you may need to scroll left to right and top to bottom to view all the available data.
+
+![](images/mp-look-up-csv_on-github.png)
+
+## Downloading the MP look-up table
+
+The latest version of the look-up table can be downloaded by clicking the "Download raw file" button above [the table as displayed on GitHub](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv).
+
+This download will retrieve a CSV copy of the look-up table that can be opened in Excel and PowerBI or with developer tools such as R or Python. Alternatively if you want to connect to the data using code, use the [direct link to the raw mp_lookup.csv](https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv).
+
+## Reviewing recent updates to the look-up table
+
+Any recent changes can be reviewed on GitHub by viewing the [github-actions\[bot\] project history](https://github.com/dfe-analytical-services/mp-lookup/commits/main/?author=github-actions%5Bbot%5D).
+
+![](images/mp-look-up-history_on-github.png)
+
+:::{.callout-warning}
+Any changes listed in the history not titled **Automatic update of mp_lookup.csv** 
+are likely to be updates to the underlying code made by the development team. 
+You can filter to just view the automated updates by selecting 'github-actions[bot]' in place of 'All users' from the dropdown filter at the top right of the history 
+page.
+:::
+
+Clicking on any of the listed commit titles (e.g. [Automatic update of mp_lookup.csv](https://github.com/dfe-analytical-services/mp-lookup/commit/946f0627f902a6da9659e69e9a34f423b811f08e)) will provide details of all changes made in a spcific update:
+
+![](images/mp-look-up-changes_on-github.png)
+
+The left hand column above shows the state of the look-up prior to the update and the right hand side shows the state after the update. Changes are marked in red in the previous version (left) and green in the updated version (right).
