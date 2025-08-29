@@ -1,7 +1,7 @@
 on:
   workflow_dispatch:
   push:
-    branches: new-feature/user-guide
+    branches: main
 
 name: Quarto Publish
 
