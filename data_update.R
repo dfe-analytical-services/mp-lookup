@@ -78,6 +78,7 @@ mp_lookup <- mp_lookup |>
 # Add on LADs =================================================================
 lad_summary <- dfeR::geo_hierarchy |>
   dplyr::group_by(pcon_code) |>
+  dplyr::arrange(lad_code) |>
   dplyr::summarise(
     lad_names = paste(unique(lad_name), collapse = " / "),
     lad_codes = paste(unique(lad_code), collapse = " / ")
@@ -89,6 +90,7 @@ mp_lookup <- mp_lookup |>
 # Add on LAs ==================================================================
 la_summary <- dfeR::geo_hierarchy |>
   dplyr::group_by(pcon_code) |>
+  dplyr::arrange(new_la_code) |>
   dplyr::summarise(
     la_names = paste(unique(la_name), collapse = " / "),
     old_la_codes = paste(unique(old_la_code), collapse = " / "),
@@ -101,6 +103,7 @@ mp_lookup <- mp_lookup |>
 # Add on Mayoral Authorities ==================================================
 mayoral_summary <- dfeR::geo_hierarchy |>
   dplyr::group_by(pcon_code) |>
+  dplyr::arrange(cauth_code) |>
   dplyr::filter(cauth_name != "Not applicable") |> # add back in later to avoid
   # ...unnecessary "Not applicable" entries in the concatenated strings
   dplyr::summarise(
@@ -122,6 +125,9 @@ mp_lookup <- mp_lookup |>
       mayoral_auth_codes
     )
   )
+
+# Set a consistent order ======================================================
+mp_lookup <- dplyr::arrange(mp_lookup, pcon_code)
 
 # QA ==========================================================================
 expected_cols <- c(
