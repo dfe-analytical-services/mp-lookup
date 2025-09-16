@@ -43,9 +43,10 @@ mp_lookup <- mp_lookup |>
   ) |>
   dplyr::select(-pcon_name_lower, member_id)
 
-# Read in election results and add them on =================================
-
-election_results <- read.csv("candidate-level-results-general-election-04-07-2024.csv") |>
+# Read in election results and add them on ====================================
+election_results <- read.csv(
+  "candidate-level-results-general-election-04-07-2024.csv"
+) |>
   # Clean column names to snake case
   janitor::clean_names() |>
   #create a column to standardise constituency names so the join works without
@@ -56,7 +57,7 @@ election_results <- read.csv("candidate-level-results-general-election-04-07-202
   # Select relevant columns
   dplyr::select(
     pcon_code = constituency_geographic_code,
-    pcon_name_join =constituency_name,
+    pcon_name_join = constituency_name,
     election_result_summary_2024 = election_result_summary
   )
 
@@ -68,16 +69,17 @@ mp_lookup <- mp_lookup |>
     pcon_name_join = tolower(pcon_name)
   ) |>
   # Join with election results
-  dplyr::left_join(election_results, by = c("pcon_code",
-                                            "pcon_name_join"
-                                            )
-                   ) |>
+  dplyr::left_join(election_results, by = c("pcon_code", "pcon_name_join")) |>
   # Remove duplicates
   dplyr::distinct() |>
   #unselect pcon_name_join
   dplyr::select(-pcon_name_join)
 
+# Add on LADs =================================================================
 
+# Add on LAs ==================================================================
+
+# Add on Mayoral Authorities ==================================================
 
 # QA ==========================================================================
 test_that("mp_lookup has expected columns", {
