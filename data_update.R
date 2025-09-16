@@ -79,8 +79,8 @@ mp_lookup <- mp_lookup |>
 lad_summary <- dfeR::wd_pcon_lad_la_rgn_ctry |>
   group_by(pcon_code) |>
   summarise(
-    lad_name = paste(unique(lad_name), collapse = " / "),
-    lad_code = paste(unique(lad_code), collapse = " / ")
+    lad_names = paste(unique(lad_name), collapse = " / "),
+    lad_codes = paste(unique(lad_code), collapse = " / ")
   )
 
 mp_lookup <- mp_lookup |>
@@ -91,29 +91,31 @@ mp_lookup <- mp_lookup |>
 # Add on Mayoral Authorities ==================================================
 
 # QA ==========================================================================
+expected_cols <- c(
+  "pcon_code",
+  "pcon_name",
+  "full_title",
+  "display_as",
+  "party_text",
+  "member_email",
+  "election_result_summary_2024",
+  "lad_names",
+  "lad_codes"#,
+  #"la_names",
+  #"la_codes",
+  #"mayoral_auth_names",
+  #"mayoral_auth_codes"
+)
+
 test_that("mp_lookup has expected columns", {
-  expect_true(all(
-    c(
-      "pcon_code",
-      "pcon_name",
-      "full_title",
-      "display_as",
-      "party_text",
-      "member_email",
-      "election_result_summary_2024"
-    ) %in%
-      colnames(mp_lookup)
-  ))
+  expect_setequal(
+    colnames(mp_lookup),
+    union(colnames(mp_lookup), expected_cols)
+  )
 })
 
 test_that("mp_lookup has no missing values in key columns", {
-  expect_true(all(!is.na(mp_lookup$pcon_code)))
-  expect_true(all(!is.na(mp_lookup$pcon_name)))
-  expect_true(all(!is.na(mp_lookup$full_title)))
-  expect_true(all(!is.na(mp_lookup$display_as)))
-  expect_true(all(!is.na(mp_lookup$party_text)))
-  expect_true(all(!is.na(mp_lookup$member_email)))
-  expect_true(all(!is.na(mp_lookup$election_result_summary_2024)))
+  expect_false(any(is.na(mp_lookup[expected_cols])))
 })
 
 test_that("No duplicate rows", {
