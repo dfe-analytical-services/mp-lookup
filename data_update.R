@@ -77,8 +77,8 @@ mp_lookup <- mp_lookup |>
 
 # Add on LADs =================================================================
 lad_summary <- dfeR::wd_pcon_lad_la_rgn_ctry |>
-  group_by(pcon_code) |>
-  summarise(
+  dplyr::group_by(pcon_code) |>
+  dplyr::summarise(
     lad_names = paste(unique(lad_name), collapse = " / "),
     lad_codes = paste(unique(lad_code), collapse = " / ")
   )
@@ -87,6 +87,16 @@ mp_lookup <- mp_lookup |>
   dplyr::left_join(lad_summary, by = "pcon_code")
 
 # Add on LAs ==================================================================
+la_summary <- dfeR::wd_pcon_lad_la_rgn_ctry |>
+  dplyr::group_by(pcon_code) |>
+  dplyr::summarise(
+    la_names = paste(unique(la_name), collapse = " / "),
+    old_la_codes = paste(unique(old_la_code), collapse = " / "),
+    new_la_codes = paste(unique(new_la_code), collapse = " / ")
+  )
+
+mp_lookup <- mp_lookup |>
+  dplyr::left_join(la_summary, by = "pcon_code")
 
 # Add on Mayoral Authorities ==================================================
 
@@ -100,9 +110,10 @@ expected_cols <- c(
   "member_email",
   "election_result_summary_2024",
   "lad_names",
-  "lad_codes"#,
-  #"la_names",
-  #"la_codes",
+  "lad_codes",
+  "la_names",
+  "new_la_codes",
+  "old_la_codes"
   #"mayoral_auth_names",
   #"mayoral_auth_codes"
 )
