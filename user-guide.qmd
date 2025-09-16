@@ -88,4 +88,6 @@ Location information (for example LADs / LAs) will not be updated until a new ve
 
 The location hierarchy is not perfect. Some constituencies span multiple local authorities, and often only cover small parts of those local authorities. As such we have listed all relevant locations that overlap with the consistuency boundaries regardless of the size of the overlap.
 
+LAD codes are supplied as of the 2024 lookups from ONS, we are waiting for the 2025 updates to be published before we're able to have full coverage of the latest LAD codes.
+
 For a more detailed breakdown of the locations and codes, and also for easier manipulation of the data using code, please see the `geo_hierarchy` dataset in the [dfeR package](https://dfe-analytical-services.github.io/dfeR/reference/geo_hierarchy.html)
