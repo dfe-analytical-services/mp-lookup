@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.33">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -26,14 +26,15 @@ ul.task-list li input[type="checkbox"] {
 <script src="user-guide_files/libs/clipboard/clipboard.min.js"></script>
 <script src="user-guide_files/libs/quarto-html/quarto.js" type="module"></script>
 <script src="user-guide_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="user-guide_files/libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="user-guide_files/libs/quarto-html/popper.min.js"></script>
 <script src="user-guide_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="user-guide_files/libs/quarto-html/anchor.min.js"></script>
 <link href="user-guide_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="user-guide_files/libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="user-guide_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="user-guide_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="user-guide_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="user-guide_files/libs/bootstrap/bootstrap-b5e61608f2878da78171594d3dd9de75.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="user-guide_files/libs/bootstrap/bootstrap-6309dc67953d987584cdd52bd887cb4d.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -52,6 +53,11 @@ ul.task-list li input[type="checkbox"] {
   <li><a href="#viewing-the-mp-look-up-table" id="toc-viewing-the-mp-look-up-table" class="nav-link" data-scroll-target="#viewing-the-mp-look-up-table"><span class="header-section-number">4</span> Viewing the MP look-up table</a></li>
   <li><a href="#downloading-the-mp-look-up-table" id="toc-downloading-the-mp-look-up-table" class="nav-link" data-scroll-target="#downloading-the-mp-look-up-table"><span class="header-section-number">5</span> Downloading the MP look-up table</a></li>
   <li><a href="#reviewing-recent-updates-to-the-look-up-table" id="toc-reviewing-recent-updates-to-the-look-up-table" class="nav-link" data-scroll-target="#reviewing-recent-updates-to-the-look-up-table"><span class="header-section-number">6</span> Reviewing recent updates to the look-up table</a></li>
+  <li><a href="#sources" id="toc-sources" class="nav-link" data-scroll-target="#sources"><span class="header-section-number">7</span> Sources</a>
+  <ul class="collapse">
+  <li><a href="#location-updates" id="toc-location-updates" class="nav-link" data-scroll-target="#location-updates"><span class="header-section-number">7.1</span> Location updates</a></li>
+  <li><a href="#locations" id="toc-locations" class="nav-link" data-scroll-target="#locations"><span class="header-section-number">7.2</span> Locations</a></li>
+  </ul></li>
   </ul>
 </nav>
 </div>
@@ -96,6 +102,9 @@ ul.task-list li input[type="checkbox"] {
 <li>Political party of current sitting MP</li>
 <li>Primary e-mail address of current sitting MP</li>
 <li>Parliamentary constituency election result from the 2024 general election</li>
+<li>Local authority district names and codes that fall within the parliamentary constituency</li>
+<li>Local authority names and codes that fall within the parliamentary constituency</li>
+<li>Mayoral combined authority names and codes that fall within the parliamentary constituency</li>
 </ul>
 <div class="callout callout-style-default callout-note callout-titled">
 <div class="callout-header d-flex align-content-center">
@@ -107,7 +116,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>The MP look-up table is automatically updated every Monday if any changes are available.</p>
+<p>The MP look-up table is automatically updated every Monday if any changes to MPs are available.</p>
 </div>
 </div>
 </section>
@@ -142,6 +151,25 @@ Warning
 <p>Clicking on any of the listed commit titles (e.g.&nbsp;<a href="https://github.com/dfe-analytical-services/mp-lookup/commit/946f0627f902a6da9659e69e9a34f423b811f08e">Automatic update of mp_lookup.csv</a>) will provide details of all changes made in a spcific update:</p>
 <p><img src="images/mp-look-up-changes_on-github.png" class="img-fluid"></p>
 <p>The left hand column above shows the state of the look-up prior to the update and the right hand side shows the state after the update. Changes are marked in red in the previous version (left) and green in the updated version (right).</p>
+</section>
+<section id="sources" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="sources"><span class="header-section-number">7</span> Sources</h2>
+<p>The MP data is sourced from the <a href="http://data.parliament.uk/membersdataplatform/default.aspx">UK Parliament API</a> and the <a href="https://geoportal.statistics.gov.uk/">Open Geography Portal</a> using the following R packages:</p>
+<ul>
+<li><p><a href="https://docs.evanodell.com/mnis/">mnis</a></p></li>
+<li><p><a href="https://github.com/dfe-analytical-services/dfeR">dfeR</a></p></li>
+</ul>
+<p>The election results data is sourced from the ‘candidate-level general election result data’ CSV file from the <a href="https://electionresults.parliament.uk/general-elections/6/political-parties">UK Parliament election results page</a>.</p>
+<section id="location-updates" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="location-updates"><span class="header-section-number">7.1</span> Location updates</h3>
+<p>Location information (for example LADs / LAs) will not be updated until a new version of the relevant source data is released. The <a href="https://github.com/dfe-analytical-services/dfeR">dfeR package</a> contains the source data from the <a href="https://geoportal.statistics.gov.uk/">Open Geography Portal</a>, we will update there when new versions are available.</p>
+</section>
+<section id="locations" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="locations"><span class="header-section-number">7.2</span> Locations</h3>
+<p>The relationship between Parliamentary constituencies and Local authorities, Local authorities districts and Mayoral combined authorities is not always neat, for example, some constituencies span multiple local authorities, and often only cover small parts of those local authorities. As such we have listed all relevant locations that overlap with the constituency boundaries regardless of the size of the overlap.</p>
+<p>LAD codes are supplied as of the 2024 lookups from ONS, we are waiting for the 2025 updates to be published before we’re able to have full coverage of the latest LAD codes.</p>
+<p>For a more detailed breakdown of the locations and codes, and also for easier manipulation of the data using code, please see the <code>geo_hierarchy</code> dataset in the <a href="https://dfe-analytical-services.github.io/dfeR/reference/geo_hierarchy.html">dfeR package</a></p>
+</section>
 </section>
 
 </main>
@@ -197,13 +225,14 @@ Warning
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
