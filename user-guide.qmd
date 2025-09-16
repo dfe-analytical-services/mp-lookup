@@ -82,7 +82,7 @@ The election results data is sourced from the 'candidate-level general election 
 
 ### Location updates
 
-Location information (for example LADs / LAs) will not be updated until a new version of the relevant source data is released. The [dfeR package]() contains the source data from the [Open Geography Portal](https://geoportal.statistics.gov.uk/), we will update there when new versions are available.
+Location information (for example LADs / LAs) will not be updated until a new version of the relevant source data is released. The [dfeR package](https://github.com/dfe-analytical-services/dfeR) contains the source data from the [Open Geography Portal](https://geoportal.statistics.gov.uk/), we will update there when new versions are available.
 
 ### Locations
 
