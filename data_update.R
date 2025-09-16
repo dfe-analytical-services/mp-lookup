@@ -76,6 +76,15 @@ mp_lookup <- mp_lookup |>
   dplyr::select(-pcon_name_join)
 
 # Add on LADs =================================================================
+lad_summary <- dfeR::wd_pcon_lad_la_rgn_ctry |>
+  group_by(pcon_code) |>
+  summarise(
+    lad_name = paste(unique(lad_name), collapse = " / "),
+    lad_code = paste(unique(lad_code), collapse = " / ")
+  )
+
+mp_lookup <- mp_lookup |>
+  dplyr::left_join(lad_summary, by = "pcon_code")
 
 # Add on LAs ==================================================================
 
