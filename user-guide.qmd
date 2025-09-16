@@ -28,9 +28,12 @@ The look-up table contains a single row for each current parliamentary constitue
 - Political party of current sitting MP
 - Primary e-mail address of current sitting MP
 - Parliamentary constituency election result from the 2024 general election
+- Local authority district names and codes that fall within the parliamentary constituency
+- Local authority names and codes that fall within the parliamentary constituency
+- Mayoral combined authority names and codes that fall within the parliamentary constituency
 
 ::: {.callout-note}
-The MP look-up table is automatically updated every Monday if any changes are available.
+The MP look-up table is automatically updated every Monday if any changes to MPs are available.
 :::
 
 ## Viewing the MP look-up table
@@ -66,3 +69,25 @@ Clicking on any of the listed commit titles (e.g. [Automatic update of mp_lookup
 ![](images/mp-look-up-changes_on-github.png)
 
 The left hand column above shows the state of the look-up prior to the update and the right hand side shows the state after the update. Changes are marked in red in the previous version (left) and green in the updated version (right).
+
+## Sources
+
+The MP data is sourced from the [UK Parliament API](http://data.parliament.uk/membersdataplatform/default.aspx) and the [Open Geography Portal](https://geoportal.statistics.gov.uk/) using the following R packages:
+
+-   [mnis](https://docs.evanodell.com/mnis/)
+
+-   [dfeR](https://github.com/dfe-analytical-services/dfeR)
+
+The election results data is sourced from the 'candidate-level general election result data' CSV file from the [UK Parliament election results page](https://electionresults.parliament.uk/general-elections/6/political-parties).
+
+### Location updates
+
+Location information (for example LADs / LAs) will not be updated until a new version of the relevant source data is released. The [dfeR package](https://github.com/dfe-analytical-services/dfeR) contains the source data from the [Open Geography Portal](https://geoportal.statistics.gov.uk/), we will update there when new versions are available.
+
+### Locations
+
+The relationship between Parliamentary constituencies and Local authorities, Local authorities districts and Mayoral combined authorities is not always neat, for example, some constituencies span multiple local authorities, and often only cover small parts of those local authorities. As such we have listed all relevant locations that overlap with the constituency boundaries regardless of the size of the overlap.
+
+LAD codes are supplied as of the 2024 lookups from ONS, we are waiting for the 2025 updates to be published before we're able to have full coverage of the latest LAD codes.
+
+For a more detailed breakdown of the locations and codes, and also for easier manipulation of the data using code, please see the `geo_hierarchy` dataset in the [dfeR package](https://dfe-analytical-services.github.io/dfeR/reference/geo_hierarchy.html)

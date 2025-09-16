@@ -21,13 +21,19 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("dfeR", "dplyr", "tidyr", "testthat", "devtools"), repos = "https://cloud.r-project.org/")'
+          Rscript -e 'install.packages(c("dplyr", "tidyr", "testthat", "devtools"), repos = "https://cloud.r-project.org/")'
 
       - name: Install mnis package
         env:
           GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
         run: |
           Rscript -e 'devtools::install_github("EvanOdell/mnis")'
+
+      - name: Install dfeR package
+        env:
+          GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          Rscript -e 'devtools::install_github("dfe-analytical-services/dfeR")'
 
       - name: Run main data update
         run: |

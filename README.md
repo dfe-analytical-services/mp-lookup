@@ -14,6 +14,12 @@ If you want to use this lookup programmatically (e.g. R or Python), you can use 
 https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv
 ```
 
+### Development dependencies
+
+All packages used in this repo are based on the latest versions available, currently there is no package management in place.
+
+To install the packages needed to run the code in this repository, run the commands that are used in the `.github/workflows/run_data_update.yaml` file.
+
 ## Sources
 
 The MP data is sourced from the [UK Parliament API](http://data.parliament.uk/membersdataplatform/default.aspx) and the [Open Geography Portal](https://geoportal.statistics.gov.uk/) using the following R packages:
