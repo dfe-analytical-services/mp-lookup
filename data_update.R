@@ -1,5 +1,5 @@
-library(mnis)
-library(dfeR)
+library(mnis) # installed from GitHub
+library(dfeR) # installed from GitHub
 library(dplyr)
 library(tidyr)
 library(testthat)
