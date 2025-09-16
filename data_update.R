@@ -111,12 +111,12 @@ mayoral_summary <- dfeR::geo_hierarchy |>
 mp_lookup <- mp_lookup |>
   dplyr::left_join(mayoral_summary, by = "pcon_code") |>
   dplyr::mutate(
-    cauth_name = dplyr::if_else(
+    mayoral_auth_names = dplyr::if_else(
       is.na(mayoral_auth_names),
       "Not applicable",
       mayoral_auth_names
     ),
-    cauth_code = dplyr::if_else(
+    mayoral_auth_codes = dplyr::if_else(
       is.na(mayoral_auth_codes),
       "z",
       mayoral_auth_codes
