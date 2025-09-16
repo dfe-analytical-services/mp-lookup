@@ -76,7 +76,7 @@ mp_lookup <- mp_lookup |>
   dplyr::select(-pcon_name_join)
 
 # Add on LADs =================================================================
-lad_summary <- dfeR::wd_pcon_lad_la_rgn_ctry |>
+lad_summary <- dfeR::geo_hierarchy |>
   dplyr::group_by(pcon_code) |>
   dplyr::summarise(
     lad_names = paste(unique(lad_name), collapse = " / "),
@@ -87,7 +87,7 @@ mp_lookup <- mp_lookup |>
   dplyr::left_join(lad_summary, by = "pcon_code")
 
 # Add on LAs ==================================================================
-la_summary <- dfeR::wd_pcon_lad_la_rgn_ctry |>
+la_summary <- dfeR::geo_hierarchy |>
   dplyr::group_by(pcon_code) |>
   dplyr::summarise(
     la_names = paste(unique(la_name), collapse = " / "),
@@ -99,6 +99,29 @@ mp_lookup <- mp_lookup |>
   dplyr::left_join(la_summary, by = "pcon_code")
 
 # Add on Mayoral Authorities ==================================================
+mayoral_summary <- dfeR::geo_hierarchy |>
+  dplyr::group_by(pcon_code) |>
+  dplyr::filter(cauth_name != "Not applicable") |> # add back in later to avoid
+  # ...unnecessary "Not applicable" entries in the concatenated strings
+  dplyr::summarise(
+    mayoral_auth_names = paste(unique(cauth_name), collapse = " / "),
+    mayoral_auth_codes = paste(unique(cauth_code), collapse = " / ")
+  )
+
+mp_lookup <- mp_lookup |>
+  dplyr::left_join(mayoral_summary, by = "pcon_code") |>
+  dplyr::mutate(
+    cauth_name = dplyr::if_else(
+      is.na(mayoral_auth_names),
+      "Not applicable",
+      mayoral_auth_names
+    ),
+    cauth_code = dplyr::if_else(
+      is.na(mayoral_auth_codes),
+      "z",
+      mayoral_auth_codes
+    )
+  )
 
 # QA ==========================================================================
 expected_cols <- c(
@@ -113,9 +136,9 @@ expected_cols <- c(
   "lad_codes",
   "la_names",
   "new_la_codes",
-  "old_la_codes"
-  #"mayoral_auth_names",
-  #"mayoral_auth_codes"
+  "old_la_codes",
+  "mayoral_auth_names",
+  "mayoral_auth_codes"
 )
 
 test_that("mp_lookup has expected columns", {
