@@ -3,7 +3,7 @@ name: Run R Script and Commit CSV
 on:
   workflow_dispatch: # Allow manual triggering
   schedule:
-    - cron: '0 7 * * 1' # 7am each Monday
+    - cron: '0 7 * * *' # 7am every day
   pull_request:
 
 jobs:
