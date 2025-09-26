@@ -14,7 +14,7 @@ This document outlines how to access and use the DfE's MP Parliamentary Constitu
 
 ## Quick look guide
 
-![](images/mp-look-up-on-github-overview.png)
+![](images/mp-look-up-on-github-overview.jpg)
 
 ## What does the MP look-up table contain?
 
