@@ -151,6 +151,7 @@ mp_lookup <- dplyr::arrange(mp_lookup, pcon_code)
 expected_cols <- c(
   "pcon_code",
   "pcon_name",
+  "member_id",
   "full_title",
   "display_as",
   "party_text",
@@ -159,39 +160,106 @@ expected_cols <- c(
   "lad_names",
   "lad_codes",
   "la_names",
-  "new_la_codes",
   "old_la_codes",
+  "new_la_codes",
   "mayoral_auth_names",
   "mayoral_auth_codes"
 )
 
 test_that("mp_lookup has expected columns", {
-  expect_setequal(
-    colnames(mp_lookup),
-    union(colnames(mp_lookup), expected_cols)
-  )
+  expect_equal(names(mp_lookup), expected_cols)
 })
 
-test_that("mp_lookup has no missing values in key columns", {
-  expect_false(any(is.na(mp_lookup[expected_cols])))
+test_that("mp_lookup has no missing values in columns", {
+  for (col in expected_cols) {
+    expect_false(any(is.na(mp_lookup[[col]])))
+    expect_false(any(mp_lookup[[col]] == ""))
+  }
 })
 
-test_that("No duplicate rows", {
-  expect_true(nrow(mp_lookup) == nrow(dplyr::distinct(mp_lookup)))
+test_that("No duplicates in key cols", {
+  for (col in c("pcon_name", "pcon_code", "display_as", "member_id")) {
+    expect_equal(length(unique(mp_lookup[[col]])), nrow(mp_lookup))
+  }
+})
+
+test_that("All email addresses either contain '@' or are 'No email found'", {
+  expect_true(all(
+    grepl("@", mp_lookup$member_email) |
+      mp_lookup$member_email == "No email found"
+  ))
 })
 
 test_that("There are 543 rows", {
-  # same number as we know from dfeR pcons
+  # Same number as we know from dfeR pcons
   expect_true(nrow(mp_lookup) == 543)
 })
 
 test_that("There are 75 PCons in GLA", {
-  # same number as we know from dfeR pcons
   expect_true(
     mp_lookup |>
       dplyr::filter(mayoral_auth_names == "Greater London Authority") |>
       nrow() ==
       75
+  )
+})
+
+test_that("All codes follow expected pattern", {
+  expect_true(all(grepl("^[A-Za-z0-9]{9}$", mp_lookup$pcon_code)))
+
+  main_code_pattern <- "^([A-Za-z0-9]{9}|z)( / ([A-Za-z0-9]{9}|z))*$"
+  for (col in c("lad_codes", "new_la_codes", "mayoral_auth_codes")) {
+    expect_true(all(grepl(main_code_pattern, mp_lookup[[col]])))
+  }
+
+  three_digit_pattern <- "^([0-9]{3}|z)( / ([0-9]{3}|z))*$"
+  expect_true(all(grepl(three_digit_pattern, mp_lookup$old_la_codes)))
+})
+
+test_that("Spot checks are as expected", {
+  # Using a couple that are least likely to change
+  expect_equal(
+    mp_lookup |>
+      dplyr::filter(pcon_name == "Holborn and St Pancras"),
+    tibble::tibble(
+      pcon_code = "E14001290",
+      pcon_name = "Holborn and St Pancras",
+      member_id = "4514",
+      full_title = "Rt Hon Sir Keir Starmer MP",
+      display_as = "Sir Keir Starmer",
+      party_text = "Labour",
+      member_email = "keir.starmer.mp@parliament.uk",
+      election_result_summary_2024 = "Lab hold",
+      lad_names = "Camden",
+      lad_codes = "E09000007",
+      la_names = "Camden",
+      old_la_codes = "202",
+      new_la_codes = "E09000007",
+      mayoral_auth_names = "Greater London Authority",
+      mayoral_auth_codes = "E61000001"
+    )
+  )
+
+  expect_equal(
+    mp_lookup |>
+      filter(pcon_code == "E14001170"),
+    tibble::tibble(
+      pcon_code = "E14001170",
+      pcon_name = "Chorley",
+      member_id = "467",
+      full_title = "Rt Hon Sir Lindsay Hoyle MP",
+      display_as = "Sir Lindsay Hoyle",
+      party_text = "Speaker",
+      member_email = "lindsay.hoyle.mp@parliament.uk",
+      election_result_summary_2024 = "Spk hold",
+      lad_names = "Chorley",
+      lad_codes = "E07000118",
+      la_names = "Lancashire",
+      old_la_codes = "888",
+      new_la_codes = "E10000017",
+      mayoral_auth_names = "Lancashire",
+      mayoral_auth_codes = "E47000018"
+    )
   )
 })
 
