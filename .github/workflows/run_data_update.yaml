@@ -37,7 +37,7 @@ jobs:
 
       - name: Run main data update
         run: |
-          Rscript data_update.R
+          Rscript R/data_update.R
 
       - name: Commit CSV file
         if: github.event_name != 'pull_request'

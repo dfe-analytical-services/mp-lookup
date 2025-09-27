@@ -46,7 +46,7 @@ mp_lookup <- mp_lookup |>
 
 # Read in election results and add them on ====================================
 election_results <- read.csv(
-  "candidate-level-results-general-election-04-07-2024.csv"
+  "data/candidate-level-results-general-election-04-07-2024.csv"
 ) |>
   # Clean column names to snake case
   janitor::clean_names() |>
