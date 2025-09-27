@@ -21,7 +21,7 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("dplyr", "tidyr", "testthat", "devtools"), repos = "https://cloud.r-project.org/")'
+          Rscript -e 'install.packages(c("dplyr", "stringr", "tidyr", "testthat", "devtools"), repos = "https://cloud.r-project.org/")'
 
       - name: Install mnis package
         env:

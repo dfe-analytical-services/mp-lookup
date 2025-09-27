@@ -2,6 +2,7 @@ library(mnis) # installed from GitHub
 library(dfeR) # installed from GitHub
 library(dplyr)
 library(tidyr)
+library(stringr)
 library(testthat)
 
 source("R/utils.R")
@@ -49,8 +50,8 @@ election_results <- read.csv(
 ) |>
   # Clean column names to snake case
   janitor::clean_names() |>
-  #create a column to standardise constituency names so the join works without
-  #case sensitivity becoming an issue
+  # Create a column to standardise constituency names so the join works without
+  # case sensitivity becoming an issue
   dplyr::mutate(
     constituency_name = tolower(constituency_name)
   ) |>
@@ -63,8 +64,8 @@ election_results <- read.csv(
 
 # join the data
 mp_lookup <- mp_lookup |>
-  #create a column to standardise constituency names so the join works without
-  #case sensitivity becoming an issue
+  # Create a column to standardise constituency names so the join works without
+  # case sensitivity becoming an issue
   dplyr::mutate(
     pcon_name_join = tolower(pcon_name)
   ) |>
@@ -72,7 +73,7 @@ mp_lookup <- mp_lookup |>
   dplyr::left_join(election_results, by = c("pcon_code", "pcon_name_join")) |>
   # Remove duplicates
   dplyr::distinct() |>
-  #unselect pcon_name_join
+  # unselect pcon_name_join
   dplyr::select(-pcon_name_join)
 
 # Add on LADs =================================================================
@@ -95,6 +96,10 @@ la_summary <- dfeR::geo_hierarchy |>
     la_names = paste(unique(la_name), collapse = " / "),
     old_la_codes = paste(unique(old_la_code), collapse = " / "),
     new_la_codes = paste(unique(new_la_code), collapse = " / ")
+  ) |>
+  # strip out " / z" from old_la_codes (as GIAS doesn't yet have 2025)
+  dplyr::mutate(
+    old_la_codes = gsub(" / z$", "", old_la_codes)
   )
 
 mp_lookup <- mp_lookup |>
@@ -104,6 +109,19 @@ mp_lookup <- mp_lookup |>
 mayoral_summary <- dfeR::geo_hierarchy |>
   dplyr::group_by(pcon_code) |>
   dplyr::arrange(cauth_code) |>
+  # Add in GLA based on LAD being London borough
+  dplyr::mutate(
+    cauth_name = dplyr::if_else(
+      stringr::str_starts(lad_code, "E090"),
+      "Greater London Authority",
+      cauth_name
+    ),
+    cauth_code = dplyr::if_else(
+      stringr::str_starts(lad_code, "E090"),
+      "E61000001",
+      cauth_code
+    )
+  ) |>
   dplyr::filter(cauth_name != "Not applicable") |> # add back in later to avoid
   # ...unnecessary "Not applicable" entries in the concatenated strings
   dplyr::summarise(
@@ -165,6 +183,16 @@ test_that("No duplicate rows", {
 test_that("There are 543 rows", {
   # same number as we know from dfeR pcons
   expect_true(nrow(mp_lookup) == 543)
+})
+
+test_that("There are 75 PCons in GLA", {
+  # same number as we know from dfeR pcons
+  expect_true(
+    mp_lookup |>
+      dplyr::filter(mayoral_auth_names == "Greater London Authority") |>
+      nrow() ==
+      75
+  )
 })
 
 # Write to CSV ================================================================
