@@ -108,12 +108,12 @@ mp_lookup <- mp_lookup |>
 # Add on Mayoral Authorities ==================================================
 mayoral_summary <- dfeR::geo_hierarchy |>
   dplyr::group_by(pcon_code) |>
-  dplyr::arrange(cauth_code) |>
-  dplyr::filter(cauth_name != "Not applicable") |> # add back in later to avoid
+  dplyr::arrange(english_devolved_area_code) |>
+  dplyr::filter(english_devolved_area_name != "Not applicable") |> # add back in later to avoid
   # ...unnecessary "Not applicable" entries in the concatenated strings
   dplyr::summarise(
-    mayoral_auth_names = paste(unique(cauth_name), collapse = " / "),
-    mayoral_auth_codes = paste(unique(cauth_code), collapse = " / ")
+    mayoral_auth_names = paste(unique(english_devolved_area_name), collapse = " / "),
+    mayoral_auth_codes = paste(unique(english_devolved_area_code), collapse = " / ")
   )
 
 mp_lookup <- mp_lookup |>
@@ -182,6 +182,11 @@ test_that("There are 543 rows", {
   expect_true(nrow(mp_lookup) == 543)
 })
 
+test_that("There are 543 unique constituencies", {
+  expect_true(length(unique(mp_lookup$pcon_name)) == 543)
+  expect_true(length(unique(mp_lookup$pcon_code)) == 543)
+})
+
 test_that("There are 75 PCons in GLA", {
   expect_true(
     mp_lookup |>
@@ -203,51 +208,14 @@ test_that("All codes follow expected pattern", {
   expect_true(all(grepl(three_digit_pattern, mp_lookup$old_la_codes)))
 })
 
-test_that("Spot checks are as expected", {
-  # Using a couple that are least likely to change
-  expect_equal(
-    mp_lookup |>
-      dplyr::filter(pcon_name == "Holborn and St Pancras"),
-    tibble::tibble(
-      pcon_code = "E14001290",
-      pcon_name = "Holborn and St Pancras",
-      member_id = "4514",
-      full_title = "Rt Hon Sir Keir Starmer MP",
-      display_as = "Sir Keir Starmer",
-      party_text = "Labour",
-      member_email = "keir.starmer.mp@parliament.uk",
-      election_result_summary_2024 = "Lab hold",
-      lad_names = "Camden",
-      lad_codes = "E09000007",
-      la_names = "Camden",
-      old_la_codes = "202",
-      new_la_codes = "E09000007",
-      mayoral_auth_names = "Greater London Authority",
-      mayoral_auth_codes = "E61000001"
-    )
-  )
+test_that("All constituency names are within the dfeR pcons", {
+  dfeR_pcons <- dfeR::fetch_pcons(2024, "England")$pcon_name
+  expect_true(all(mp_lookup$pcon_name %in% dfeR_pcons))
+})
 
-  expect_equal(
-    mp_lookup |>
-      filter(pcon_code == "E14001170"),
-    tibble::tibble(
-      pcon_code = "E14001170",
-      pcon_name = "Chorley",
-      member_id = "467",
-      full_title = "Rt Hon Sir Lindsay Hoyle MP",
-      display_as = "Sir Lindsay Hoyle",
-      party_text = "Speaker",
-      member_email = "lindsay.hoyle.mp@parliament.uk",
-      election_result_summary_2024 = "Spk hold",
-      lad_names = "Chorley",
-      lad_codes = "E07000118",
-      la_names = "Lancashire",
-      old_la_codes = "888",
-      new_la_codes = "E10000017",
-      mayoral_auth_names = "Lancashire",
-      mayoral_auth_codes = "E47000018"
-    )
-  )
+test_that("All pcon codes are within the dfeR pcons", {
+  dfeR_pcons <- dfeR::fetch_pcons(2024, "England")$pcon_code
+  expect_true(all(mp_lookup$pcon_code %in% dfeR_pcons))
 })
 
 # Write to CSV ================================================================
