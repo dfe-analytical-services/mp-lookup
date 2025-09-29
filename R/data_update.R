@@ -109,19 +109,6 @@ mp_lookup <- mp_lookup |>
 mayoral_summary <- dfeR::geo_hierarchy |>
   dplyr::group_by(pcon_code) |>
   dplyr::arrange(cauth_code) |>
-  # Add in GLA based on LAD being London borough
-  dplyr::mutate(
-    cauth_name = dplyr::if_else(
-      stringr::str_starts(lad_code, "E090"),
-      "Greater London Authority",
-      cauth_name
-    ),
-    cauth_code = dplyr::if_else(
-      stringr::str_starts(lad_code, "E090"),
-      "E61000001",
-      cauth_code
-    )
-  ) |>
   dplyr::filter(cauth_name != "Not applicable") |> # add back in later to avoid
   # ...unnecessary "Not applicable" entries in the concatenated strings
   dplyr::summarise(
