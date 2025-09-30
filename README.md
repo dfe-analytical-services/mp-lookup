@@ -4,6 +4,8 @@ Repository that contains an up to date lookup of MPs, their constituencies, and 
 
 This is a quick stop-gap, long term this will hopefully be made available from a database within DfE for analysts to access.
 
+Full credit to @rmbielby for the logo involving our mascot Frederick!
+
 ## How to use
 
 The look up file is available as a CSV file you can [view and download from the repository](https://github.com/dfe-analytical-services/mp-lookup/blob/main/mp_lookup.csv). There's a [user guide available as a webpage](https://dfe-analytical-services.github.io/mp-lookup/), and a [user guide as a downloadable PDF](https://github.com/dfe-analytical-services/mp-lookup/blob/main/user-guide.pdf) to assist you in getting what you need from the lookup file.
