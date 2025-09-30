@@ -44,7 +44,7 @@ If you need anything else from the [Open Geography Portal](https://geoportal.sta
 
 Updates about MPs are done automatically every morning using GitHub Actions, these check for any changes in the MP data, and will overwrite the file with a newer version if there are.
 
-Location updates will come through the [dfeR package](https://github.com/dfe-analytical-services/dfeR), as new boundaries are released on the [Open Geography Portal](https://geoportal.statistics.gov.uk/).
+Location updates will come through the [dfeR package](https://github.com/dfe-analytical-services/dfeR), as new boundaries are released on the [Open Geography Portal](https://geoportal.statistics.gov.uk/). This lookup is currently intended as a latest view only, therefore legacy boundaries should only be kept for as long as they are needed e.g. currently 2024 codes are still widely in use across the DfE / systems haven't updated to 2025 codes, and therefore we don't have 2025 versions of the 3 digit LA codes yet, so we keep those legacy 2024 columns until we have 2025 versions of the 3 digit codes, after that point those columns should be removed and only the latest codes kept.
 
 Election results data is updated manually from the Parliament website.
 
