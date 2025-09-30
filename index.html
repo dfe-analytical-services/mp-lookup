@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.24">
+<meta name="generator" content="quarto-1.8.25">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -31,7 +31,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="user-guide_files/libs/quarto-html/tippy.umd.min.js"></script>
 <script src="user-guide_files/libs/quarto-html/anchor.min.js"></script>
 <link href="user-guide_files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="user-guide_files/libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="user-guide_files/libs/quarto-html/quarto-syntax-highlighting-7b89279ff1a6dce999919e0e67d4d9ec.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="user-guide_files/libs/bootstrap/bootstrap.min.js"></script>
 <link href="user-guide_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="user-guide_files/libs/bootstrap/bootstrap-d7471cd11f43765965ad61ab5bb838ee.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
@@ -167,7 +167,8 @@ Warning
 <section id="locations" class="level3" data-number="7.2">
 <h3 data-number="7.2" class="anchored" data-anchor-id="locations"><span class="header-section-number">7.2</span> Locations</h3>
 <p>The relationship between Parliamentary constituencies and Local authorities, Local authorities districts and Mayoral combined authorities is not always neat, for example, some constituencies span multiple local authorities, and often only cover small parts of those local authorities. As such we have listed all relevant locations that overlap with the constituency boundaries regardless of the size of the overlap.</p>
-<p>LAD codes are supplied as of the 2024 lookups from ONS, we are waiting for the 2025 updates to be published before we’re able to have full coverage of the latest LAD codes.</p>
+<p>LAD and LA codes include both 2024 and 2025 variants, as not everywhere is using 2025 yet. The 3 digit ‘old’ LA codes only have 2024 versions available on <a href="https://get-information-schools.service.gov.uk/Guidance/LaNameCodes">GIAS</a>. This only affects a handful of LADs / LAs that changed code (but not name) in 2025, for example Sheffield changed from <code>E08000019</code> to <code>E08000039</code> <a href="https://geoportal.statistics.gov.uk/datasets/40d74f80a6cb49f68fdd9fa53efbb1dd_0/explore?filters=eyJMQUQyNE5NIjpbIlNoZWZmaWVsZCJdfQ%3D%3D">ONS LAD changes 2024 - 2025</a>.</p>
+<p>Greater London Authority is not included in the lookups from ONS but has been added as the mayoral area for all Local authority districts that start with <code>E090...</code>.</p>
 <p>For a more detailed breakdown of the locations and codes, and also for easier manipulation of the data using code, please see the <code>geo_hierarchy</code> dataset in the <a href="https://dfe-analytical-services.github.io/dfeR/reference/geo_hierarchy.html">dfeR package</a></p>
 </section>
 </section>
