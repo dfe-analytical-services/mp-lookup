@@ -21,7 +21,7 @@ jobs:
 
       - name: Install R packages
         run: |
-          Rscript -e 'install.packages(c("dplyr", "tidyr", "testthat", "devtools"), repos = "https://cloud.r-project.org/")'
+          Rscript -e 'install.packages(c("dplyr", "stringr", "tidyr", "testthat", "devtools"), repos = "https://cloud.r-project.org/")'
 
       - name: Install mnis package
         env:
@@ -37,7 +37,7 @@ jobs:
 
       - name: Run main data update
         run: |
-          Rscript data_update.R
+          Rscript R/data_update.R
 
       - name: Commit CSV file
         if: github.event_name != 'pull_request'

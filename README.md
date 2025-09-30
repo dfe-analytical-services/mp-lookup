@@ -14,6 +14,8 @@ If you want to use this lookup programmatically (e.g. R or Python), you can use 
 https://raw.githubusercontent.com/dfe-analytical-services/mp-lookup/refs/heads/main/mp_lookup.csv
 ```
 
+Though given the concatenated format of the location codes, we'd suggest anyone using code looks through `R/data_update.R` and the source packages. Particularly if you are wanting a location hierarchy, you should use the [dfeR package](https://github.com/dfe-analytical-services/dfeR) directly.
+
 ### Development dependencies
 
 All packages used in this repo are based on the latest versions available, currently there is no package management in place.
@@ -40,9 +42,11 @@ If you need anything else from the [Open Geography Portal](https://geoportal.sta
 
 ## Updates
 
-Updates about MPs are done automatically every Monday morning using GitHub Actions, these check for any changes in the MP data, and will overwrite the file with a newer version if there are.
+Updates about MPs are done automatically every morning using GitHub Actions, these check for any changes in the MP data, and will overwrite the file with a newer version if there are.
 
-Election results data is updated manually, and will be done when the next general election is called.
+Location updates will come through the [dfeR package](https://github.com/dfe-analytical-services/dfeR), as new boundaries are released on the [Open Geography Portal](https://geoportal.statistics.gov.uk/). This lookup is currently intended as a latest view only, therefore legacy boundaries should only be kept for as long as they are needed e.g. currently 2024 codes are still widely in use across the DfE / systems haven't updated to 2025 codes, and therefore we don't have 2025 versions of the 3 digit LA codes yet, so we keep those legacy 2024 columns until we have 2025 versions of the 3 digit codes, after that point those columns should be removed and only the latest codes kept.
+
+Election results data is updated manually from the Parliament website.
 
 ## Documentation
 
@@ -68,11 +72,11 @@ quarto::quarto_render(
    output_format = "pdf",
    metadata = list(
       papersize = "A4",
-      format=list(
-         pdf=list(
+      format = list(
+         pdf = list(
             toc = TRUE, 
             `number-sections` = TRUE,
-            mainfont="Arial"
+            mainfont = "Arial"
          )
       )
    )

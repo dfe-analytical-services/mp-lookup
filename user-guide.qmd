@@ -88,6 +88,8 @@ Location information (for example LADs / LAs) will not be updated until a new ve
 
 The relationship between Parliamentary constituencies and Local authorities, Local authorities districts and Mayoral combined authorities is not always neat, for example, some constituencies span multiple local authorities, and often only cover small parts of those local authorities. As such we have listed all relevant locations that overlap with the constituency boundaries regardless of the size of the overlap.
 
-LAD codes are supplied as of the 2024 lookups from ONS, we are waiting for the 2025 updates to be published before we're able to have full coverage of the latest LAD codes.
+LAD and LA codes include both 2024 and 2025 variants, as not everywhere is using 2025 yet. The 3 digit 'old' LA codes only have 2024 versions available on [GIAS](https://get-information-schools.service.gov.uk/Guidance/LaNameCodes). This only affects a handful of LADs / LAs that changed code (but not name) in 2025, for example Sheffield changed from `E08000019` to `E08000039` [ONS LAD changes 2024 - 2025](https://geoportal.statistics.gov.uk/datasets/40d74f80a6cb49f68fdd9fa53efbb1dd_0/explore?filters=eyJMQUQyNE5NIjpbIlNoZWZmaWVsZCJdfQ%3D%3D).
+
+Greater London Authority is not included in the lookups from ONS but has been added as the mayoral area for all Local authority districts that start with `E090...`.
 
 For a more detailed breakdown of the locations and codes, and also for easier manipulation of the data using code, please see the `geo_hierarchy` dataset in the [dfeR package](https://dfe-analytical-services.github.io/dfeR/reference/geo_hierarchy.html)
