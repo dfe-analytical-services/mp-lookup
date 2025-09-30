@@ -87,6 +87,7 @@ lad_summary <- dfeR::geo_hierarchy |>
   )
 
 legacy24_lad_summary <- dfeR::fetch_lads(2024) |>
+  dplyr::arrange(lad_code) |>
   dplyr::left_join(
     dfeR::geo_hierarchy |>
       dplyr::filter(most_recent_year_included > 2024) |>
@@ -113,6 +114,7 @@ la_summary <- dfeR::geo_hierarchy |>
   )
 
 legacy24_la_summary <- dfeR::fetch_las(2024) |>
+  dplyr::arrange(new_la_code) |>
   dplyr::left_join(
     dfeR::geo_hierarchy |>
       dplyr::filter(most_recent_year_included > 2024) |>
