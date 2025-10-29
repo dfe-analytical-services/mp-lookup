@@ -187,6 +187,7 @@ mp_lookup <- dplyr::arrange(mp_lookup, pcon_code)
 expected_cols <- c(
   "pcon_code",
   "pcon_name",
+  "country",
   "member_id",
   "full_title",
   "display_as",
@@ -228,14 +229,14 @@ test_that("All email addresses either contain '@' or are 'No email found'", {
   ))
 })
 
-test_that("There are 543 rows", {
+test_that("There are 650 rows", {
   # Same number as we know from dfeR pcons
-  expect_true(nrow(mp_lookup) == 543)
+  expect_true(nrow(mp_lookup) == 650)
 })
 
-test_that("There are 543 unique constituencies", {
-  expect_true(length(unique(mp_lookup$pcon_name)) == 543)
-  expect_true(length(unique(mp_lookup$pcon_code)) == 543)
+test_that("There are 650 unique constituencies", {
+  expect_true(length(unique(mp_lookup$pcon_name)) == 650)
+  expect_true(length(unique(mp_lookup$pcon_code)) == 650)
 })
 
 test_that("There are 75 PCons in GLA", {
@@ -266,12 +267,12 @@ test_that("All codes follow expected pattern", {
 })
 
 test_that("All constituency names are within the dfeR pcons", {
-  dfeR_pcons <- dfeR::fetch_pcons(2024, "England")$pcon_name
+  dfeR_pcons <- dfeR::fetch_pcons(2024, "All")$pcon_name
   expect_true(all(mp_lookup$pcon_name %in% dfeR_pcons))
 })
 
 test_that("All pcon codes are within the dfeR pcons", {
-  dfeR_pcons <- dfeR::fetch_pcons(2024, "England")$pcon_code
+  dfeR_pcons <- dfeR::fetch_pcons(2024, "All")$pcon_code
   expect_true(all(mp_lookup$pcon_code %in% dfeR_pcons))
 })
 
