@@ -8,8 +8,15 @@ library(testthat)
 source("R/utils.R")
 
 # Create lookup ===============================================================
-mp_lookup <- dfeR::fetch_pcons(2024, "England") |>
-  dplyr::mutate(pcon_name_lower = tolower(pcon_name)) |>
+mp_lookup <- dfeR::fetch_pcons(2024, "All") |>
+  # Adding a country column to the lookup as it contains multiple countries
+  dplyr::mutate(country = case_when(
+    startsWith(pcon_code, "E") ~ "England",
+    startsWith(pcon_code, "N") ~ "Northern Ireland",
+    startsWith(pcon_code, "S") ~ "Scotland",
+    startsWith(pcon_code, "W") ~ "Wales"),
+    # setting case to lower case as case sensitivity is becoming an issue
+    pcon_name_lower = tolower(pcon_name)) |>
   dplyr::left_join(
     mnis::mnis_mps_on_date() |>
       dplyr::select(
@@ -19,9 +26,19 @@ mp_lookup <- dfeR::fetch_pcons(2024, "England") |>
         member_from,
         party_text
       ) |>
-      dplyr::mutate(member_from = tolower(member_from)),
+      dplyr::mutate(
+        # Renaming Welsh LAs by adding accents, matching names in fetch_pcons()
+        member_from = if_else(
+          member_from == "Ynys Mon",
+          "Ynys Môn", member_from),
+        member_from = if_else(
+          member_from == "Montgomeryshire and Glyndwr",
+          "Montgomeryshire and Glyndŵr", member_from),
+        # setting case to lower case as case sensitivity is becoming an issue
+        member_from = tolower(member_from)),
     by = c("pcon_name_lower" = "member_from")
   )
+
 # Add on e-mail addresses =====================================================
 address_list <- mnis_base("House=Commons|IsEligible=true/Addresses") |>
   apply(2, extract_email, simplify = TRUE)
@@ -51,8 +68,8 @@ election_results <- read.csv(
   # Clean column names to snake case
   janitor::clean_names() |>
   # Create a column to standardise constituency names so the join works without
-  # case sensitivity becoming an issue
   dplyr::mutate(
+    # setting case to lower case as case sensitivity is becoming an issue
     constituency_name = tolower(constituency_name)
   ) |>
   # Select relevant columns
