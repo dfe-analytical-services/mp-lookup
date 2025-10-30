@@ -27,7 +27,7 @@ mp_lookup <- dfeR::fetch_pcons(2024, "All") |>
         party_text
       ) |>
       dplyr::mutate(
-        # Renaming Welsh LAs by adding accents, matching names in fetch_pcons()
+        # Renaming Welsh PCons by adding accents, matching names in fetch_pcons()
         member_from = if_else(
           member_from == "Ynys Mon",
           "Ynys Môn", member_from),
