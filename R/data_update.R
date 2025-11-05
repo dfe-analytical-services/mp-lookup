@@ -10,13 +10,18 @@ source("R/utils.R")
 # Create lookup ===============================================================
 mp_lookup <- dfeR::fetch_pcons(2024, "All") |>
   # Adding a country column to the lookup as it contains multiple countries
-  dplyr::mutate(country = case_when(
-    startsWith(pcon_code, "E") ~ "England",
-    startsWith(pcon_code, "N") ~ "Northern Ireland",
-    startsWith(pcon_code, "S") ~ "Scotland",
-    startsWith(pcon_code, "W") ~ "Wales"),
+  dplyr::mutate(
+    country_name = case_when(
+      startsWith(pcon_code, "E") ~ "England",
+      startsWith(pcon_code, "N") ~ "Northern Ireland",
+      startsWith(pcon_code, "S") ~ "Scotland",
+      startsWith(pcon_code, "W") ~ "Wales"
+    ),
     # setting case to lower case as case sensitivity is becoming an issue
-    pcon_name_lower = tolower(pcon_name)) |>
+    pcon_name_lower = tolower(pcon_name)
+  ) |>
+  dplyr::left_join(dfeR::countries, by = "country_name") |>
+  dplyr::relocate(country_code, .before = country_name)|>
   dplyr::left_join(
     mnis::mnis_mps_on_date() |>
       dplyr::select(
@@ -187,7 +192,8 @@ mp_lookup <- dplyr::arrange(mp_lookup, pcon_code)
 expected_cols <- c(
   "pcon_code",
   "pcon_name",
-  "country",
+  "country_code",
+  "country_name",
   "member_id",
   "full_title",
   "display_as",
@@ -274,6 +280,16 @@ test_that("All constituency names are within the dfeR pcons", {
 test_that("All pcon codes are within the dfeR pcons", {
   dfeR_pcons <- dfeR::fetch_pcons(2024, "All")$pcon_code
   expect_true(all(mp_lookup$pcon_code %in% dfeR_pcons))
+})
+
+test_that("All countries are within the dfeR countries", {
+  dfeR_countries <- dfeR::fetch_countries()$country_name
+  expect_true(all(mp_lookup$country_name %in% dfeR_countries))
+})
+
+test_that("All country codes are within the dfeR countries", {
+  dfeR_countries <- dfeR::fetch_countries()$country_code
+  expect_true(all(mp_lookup$country_code %in% dfeR_countries))
 })
 
 # Write to CSV ================================================================
