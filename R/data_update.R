@@ -8,8 +8,20 @@ library(testthat)
 source("R/utils.R")
 
 # Create lookup ===============================================================
-mp_lookup <- dfeR::fetch_pcons(2024, "England") |>
-  dplyr::mutate(pcon_name_lower = tolower(pcon_name)) |>
+mp_lookup <- dfeR::fetch_pcons(2024, "All") |>
+  # Adding a country column to the lookup as it contains multiple countries
+  dplyr::mutate(
+    country_name = case_when(
+      startsWith(pcon_code, "E") ~ "England",
+      startsWith(pcon_code, "N") ~ "Northern Ireland",
+      startsWith(pcon_code, "S") ~ "Scotland",
+      startsWith(pcon_code, "W") ~ "Wales"
+    ),
+    # setting case to lower case as case sensitivity is becoming an issue
+    pcon_name_lower = tolower(pcon_name)
+  ) |>
+  dplyr::left_join(dfeR::countries, by = "country_name") |>
+  dplyr::relocate(country_code, .before = country_name)|>
   dplyr::left_join(
     mnis::mnis_mps_on_date() |>
       dplyr::select(
@@ -19,9 +31,19 @@ mp_lookup <- dfeR::fetch_pcons(2024, "England") |>
         member_from,
         party_text
       ) |>
-      dplyr::mutate(member_from = tolower(member_from)),
+      dplyr::mutate(
+        # Renaming Welsh PCons by adding accents, matching names in fetch_pcons()
+        member_from = if_else(
+          member_from == "Ynys Mon",
+          "Ynys Môn", member_from),
+        member_from = if_else(
+          member_from == "Montgomeryshire and Glyndwr",
+          "Montgomeryshire and Glyndŵr", member_from),
+        # setting case to lower case as case sensitivity is becoming an issue
+        member_from = tolower(member_from)),
     by = c("pcon_name_lower" = "member_from")
   )
+
 # Add on e-mail addresses =====================================================
 address_list <- mnis_base("House=Commons|IsEligible=true/Addresses") |>
   apply(2, extract_email, simplify = TRUE)
@@ -51,8 +73,8 @@ election_results <- read.csv(
   # Clean column names to snake case
   janitor::clean_names() |>
   # Create a column to standardise constituency names so the join works without
-  # case sensitivity becoming an issue
   dplyr::mutate(
+    # setting case to lower case as case sensitivity is becoming an issue
     constituency_name = tolower(constituency_name)
   ) |>
   # Select relevant columns
@@ -170,6 +192,8 @@ mp_lookup <- dplyr::arrange(mp_lookup, pcon_code)
 expected_cols <- c(
   "pcon_code",
   "pcon_name",
+  "country_code",
+  "country_name",
   "member_id",
   "full_title",
   "display_as",
@@ -211,14 +235,14 @@ test_that("All email addresses either contain '@' or are 'No email found'", {
   ))
 })
 
-test_that("There are 543 rows", {
+test_that("There are 650 rows", {
   # Same number as we know from dfeR pcons
-  expect_true(nrow(mp_lookup) == 543)
+  expect_true(nrow(mp_lookup) == 650)
 })
 
-test_that("There are 543 unique constituencies", {
-  expect_true(length(unique(mp_lookup$pcon_name)) == 543)
-  expect_true(length(unique(mp_lookup$pcon_code)) == 543)
+test_that("There are 650 unique constituencies", {
+  expect_true(length(unique(mp_lookup$pcon_name)) == 650)
+  expect_true(length(unique(mp_lookup$pcon_code)) == 650)
 })
 
 test_that("There are 75 PCons in GLA", {
@@ -249,13 +273,23 @@ test_that("All codes follow expected pattern", {
 })
 
 test_that("All constituency names are within the dfeR pcons", {
-  dfeR_pcons <- dfeR::fetch_pcons(2024, "England")$pcon_name
+  dfeR_pcons <- dfeR::fetch_pcons(2024, "All")$pcon_name
   expect_true(all(mp_lookup$pcon_name %in% dfeR_pcons))
 })
 
 test_that("All pcon codes are within the dfeR pcons", {
-  dfeR_pcons <- dfeR::fetch_pcons(2024, "England")$pcon_code
+  dfeR_pcons <- dfeR::fetch_pcons(2024, "All")$pcon_code
   expect_true(all(mp_lookup$pcon_code %in% dfeR_pcons))
+})
+
+test_that("All countries are within the dfeR countries", {
+  dfeR_countries <- dfeR::fetch_countries()$country_name
+  expect_true(all(mp_lookup$country_name %in% dfeR_countries))
+})
+
+test_that("All country codes are within the dfeR countries", {
+  dfeR_countries <- dfeR::fetch_countries()$country_code
+  expect_true(all(mp_lookup$country_code %in% dfeR_countries))
 })
 
 # Write to CSV ================================================================
