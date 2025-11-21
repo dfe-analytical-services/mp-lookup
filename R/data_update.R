@@ -193,6 +193,8 @@ mp_lookup <- dplyr::arrange(mp_lookup, pcon_code)
 expected_cols <- c(
   "pcon_code",
   "pcon_name",
+  "region_code",
+  "region_name",
   "country_code",
   "country_name",
   "member_id",
@@ -281,6 +283,20 @@ test_that("All constituency names are within the dfeR pcons", {
 test_that("All pcon codes are within the dfeR pcons", {
   dfeR_pcons <- dfeR::fetch_pcons(2024, "All")$pcon_code
   expect_true(all(mp_lookup$pcon_code %in% dfeR_pcons))
+})
+
+test_that("All region names are within the dfeR regions", {
+  dfeR_regions <- dfeR::fetch_regions()$region_name
+  # For Northern Ireland, Scotland, and Wales, use country name
+  dfeR_regions <- c(dfeR_regions, "Northern Ireland", "Scotland", "Wales")
+  expect_true(all(mp_lookup$region_name %in% dfeR_regions))
+})
+
+test_that("All region codes are within the dfeR regions", {
+  dfeR_regions <- dfeR::fetch_regions()$region_code
+  # For Northern Ireland, Scotland, and Wales, use country name
+  dfeR_regions <- c(dfeR_regions, "N92000002", "S92000003", "W92000004")
+  expect_true(all(mp_lookup$region_code %in% dfeR_regions))
 })
 
 test_that("All countries are within the dfeR countries", {
