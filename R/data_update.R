@@ -9,19 +9,20 @@ source("R/utils.R")
 
 # Create lookup ===============================================================
 mp_lookup <- dfeR::fetch_pcons(2024, "All") |>
-  # Adding a country column to the lookup as it contains multiple countries
   dplyr::mutate(
-    country_name = case_when(
-      startsWith(pcon_code, "E") ~ "England",
-      startsWith(pcon_code, "N") ~ "Northern Ireland",
-      startsWith(pcon_code, "S") ~ "Scotland",
-      startsWith(pcon_code, "W") ~ "Wales"
-    ),
     # setting case to lower case as case sensitivity is becoming an issue
     pcon_name_lower = tolower(pcon_name)
   ) |>
-  dplyr::left_join(dfeR::countries, by = "country_name") |>
-  dplyr::relocate(country_code, .before = country_name)|>
+  # Joining region and country information to parliamentary constituencies
+  dplyr::left_join(dfeR::geo_hierarchy %>%
+    dplyr::select(
+      pcon_code,
+      region_code,
+      region_name,
+      country_code,
+      country_name
+    ),
+    by = "pcon_code") |>
   dplyr::left_join(
     mnis::mnis_mps_on_date() |>
       dplyr::select(
