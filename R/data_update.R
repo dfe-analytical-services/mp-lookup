@@ -294,7 +294,7 @@ test_that("All region names are within the dfeR regions", {
 
 test_that("All region codes are within the dfeR regions", {
   dfeR_regions <- dfeR::fetch_regions()$region_code
-  # For Northern Ireland, Scotland, and Wales, use country name
+  # For Northern Ireland, Scotland, and Wales, use country code
   dfeR_regions <- c(dfeR_regions, "N92000002", "S92000003", "W92000004")
   expect_true(all(mp_lookup$region_code %in% dfeR_regions))
 })
