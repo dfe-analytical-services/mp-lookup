@@ -17,12 +17,13 @@ mp_lookup <- dfeR::fetch_pcons(2024, "All") |>
   dplyr::left_join(dfeR::geo_hierarchy %>%
     dplyr::select(
       pcon_code,
-      region_code,
-      region_name,
+      country_name,
       country_code,
-      country_name
+      region_name,
+      region_code,
     ),
     by = "pcon_code") |>
+  dplyr::relocate(pcon_name, pcon_code, .after = country_code) |>
   dplyr::left_join(
     mnis::mnis_mps_on_date() |>
       dplyr::select(
