@@ -458,15 +458,14 @@
       "LazyData": "true",
       "Roxygen": "list(markdown = TRUE)",
       "RoxygenNote": "7.3.3",
+      "Author": "Cam Race [aut, cre], Department for Education, England [cph], Laura Selby [aut], Adam Robinson [aut], Jen Machin [ctb], Jake Tufts [ctb], Rich Bielby [ctb] (ORCID: <https://orcid.org/0000-0001-9070-9969>), Menna Zayed [ctb], Lauren Snaathorst [ctb], Lara Garbett [ctb]",
+      "Maintainer": "Cam Race <cameron.race@education.gov.uk>",
       "RemoteType": "github",
       "RemoteHost": "api.github.com",
-      "RemoteRepo": "dfeR",
       "RemoteUsername": "dfe-analytical-services",
-      "RemoteRef": "HEAD",
-      "RemoteSha": "5644e8f392ac6a4a4084e1a860e937c6ce1f513d",
-      "NeedsCompilation": "no",
-      "Author": "Cam Race [aut, cre], Department for Education, England [cph], Laura Selby [aut], Adam Robinson [aut], Jen Machin [ctb], Jake Tufts [ctb], Rich Bielby [ctb] (ORCID: <https://orcid.org/0000-0001-9070-9969>), Menna Zayed [ctb], Lauren Snaathorst [ctb], Lara Garbett [ctb]",
-      "Maintainer": "Cam Race <cameron.race@education.gov.uk>"
+      "RemoteRepo": "dfeR",
+      "RemoteRef": "main",
+      "RemoteSha": "3df796cbff65b382f242809fb963d52a68e67bd1"
     },
     "diffobj": {
       "Package": "diffobj",
@@ -1606,7 +1605,7 @@
     },
     "purrr": {
       "Package": "purrr",
-      "Version": "1.1.0",
+      "Version": "1.2.0",
       "Source": "Repository",
       "Title": "Functional Programming Tools",
       "Authors@R": "c( person(\"Hadley\", \"Wickham\", , \"hadley@posit.co\", role = c(\"aut\", \"cre\"), comment = c(ORCID = \"0000-0003-4757-117X\")), person(\"Lionel\", \"Henry\", , \"lionel@posit.co\", role = \"aut\"), person(\"Posit Software, PBC\", role = c(\"cph\", \"fnd\"), comment = c(ROR = \"https://ror.org/03wc8by49\")) )",
@@ -1625,13 +1624,13 @@
         "vctrs (>= 0.6.3)"
       ],
       "Suggests": [
-        "carrier (>= 0.2.0)",
+        "carrier (>= 0.3.0)",
         "covr",
         "dplyr (>= 0.7.8)",
         "httr",
         "knitr",
         "lubridate",
-        "mirai (>= 2.4.0)",
+        "mirai (>= 2.5.1)",
         "rmarkdown",
         "testthat (>= 3.0.0)",
         "tibble",
@@ -1647,11 +1646,11 @@
       "Config/testthat/edition": "3",
       "Config/testthat/parallel": "TRUE",
       "Encoding": "UTF-8",
-      "RoxygenNote": "7.3.2",
+      "RoxygenNote": "7.3.3",
       "NeedsCompilation": "yes",
       "Author": "Hadley Wickham [aut, cre] (ORCID: <https://orcid.org/0000-0003-4757-117X>), Lionel Henry [aut], Posit Software, PBC [cph, fnd] (ROR: <https://ror.org/03wc8by49>)",
       "Maintainer": "Hadley Wickham <hadley@posit.co>",
-      "Repository": "CRAN"
+      "Repository": "RSPM"
     },
     "rappdirs": {
       "Package": "rappdirs",
