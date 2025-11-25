@@ -13,17 +13,7 @@ mp_lookup <- dfeR::fetch_pcons(2024, "All") |>
     # setting case to lower case as case sensitivity is becoming an issue
     pcon_name_lower = tolower(pcon_name)
   ) |>
-  # Joining region and country information to parliamentary constituencies
-  dplyr::left_join(dfeR::geo_hierarchy %>%
-    dplyr::select(
-      pcon_code,
-      country_name,
-      country_code,
-      region_name,
-      region_code,
-    ),
-    by = "pcon_code") |>
-  dplyr::relocate(pcon_name, pcon_code, .after = country_code) |>
+  dplyr::relocate(pcon_name, .before = pcon_code) |>
   dplyr::left_join(
     mnis::mnis_mps_on_date() |>
       dplyr::select(
@@ -35,10 +25,10 @@ mp_lookup <- dfeR::fetch_pcons(2024, "All") |>
       ) |>
       dplyr::mutate(
         # Renaming Welsh PCons by adding accents, matching names in fetch_pcons()
-        member_from = if_else(
+        member_from = dplyr::if_else(
           member_from == "Ynys Mon",
           "Ynys Môn", member_from),
-        member_from = if_else(
+        member_from = dplyr::if_else(
           member_from == "Montgomeryshire and Glyndwr",
           "Montgomeryshire and Glyndŵr", member_from),
         # setting case to lower case as case sensitivity is becoming an issue
@@ -187,17 +177,28 @@ mp_lookup <- mp_lookup |>
     )
   )
 
+# Add on Regions and Countries ================================================
+
+mp_lookup <- mp_lookup |>
+  dplyr::left_join(dfeR::geo_hierarchy |>
+    dplyr::select(
+      pcon_code,
+      region_name,
+      region_code,
+      country_name,
+      country_code,
+      ) |>
+    dplyr::distinct(pcon_code, .keep_all = TRUE),
+    by = "pcon_code"
+  )
+
 # Set a consistent order ======================================================
 mp_lookup <- dplyr::arrange(mp_lookup, pcon_code)
 
 # QA ==========================================================================
 expected_cols <- c(
-  "country_name",
-  "country_code",
   "pcon_name",
   "pcon_code",
-  "region_name",
-  "region_code",
   "member_id",
   "full_title",
   "display_as",
@@ -212,7 +213,11 @@ expected_cols <- c(
   "new_la_codes_2024",
   "old_la_codes_2024",
   "mayoral_auth_names",
-  "mayoral_auth_codes"
+  "mayoral_auth_codes",
+  "region_name",
+  "region_code",
+  "country_name",
+  "country_code"
 )
 
 test_that("mp_lookup has expected columns", {
