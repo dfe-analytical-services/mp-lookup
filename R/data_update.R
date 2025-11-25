@@ -192,12 +192,12 @@ mp_lookup <- dplyr::arrange(mp_lookup, pcon_code)
 
 # QA ==========================================================================
 expected_cols <- c(
-  "pcon_code",
-  "pcon_name",
-  "region_code",
-  "region_name",
-  "country_code",
   "country_name",
+  "country_code",
+  "pcon_name",
+  "pcon_code",
+  "region_name",
+  "region_code",
   "member_id",
   "full_title",
   "display_as",
