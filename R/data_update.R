@@ -9,19 +9,11 @@ source("R/utils.R")
 
 # Create lookup ===============================================================
 mp_lookup <- dfeR::fetch_pcons(2024, "All") |>
-  # Adding a country column to the lookup as it contains multiple countries
   dplyr::mutate(
-    country_name = case_when(
-      startsWith(pcon_code, "E") ~ "England",
-      startsWith(pcon_code, "N") ~ "Northern Ireland",
-      startsWith(pcon_code, "S") ~ "Scotland",
-      startsWith(pcon_code, "W") ~ "Wales"
-    ),
     # setting case to lower case as case sensitivity is becoming an issue
     pcon_name_lower = tolower(pcon_name)
   ) |>
-  dplyr::left_join(dfeR::countries, by = "country_name") |>
-  dplyr::relocate(country_code, .before = country_name)|>
+  dplyr::relocate(pcon_name, .before = pcon_code) |>
   dplyr::left_join(
     mnis::mnis_mps_on_date() |>
       dplyr::select(
@@ -33,10 +25,10 @@ mp_lookup <- dfeR::fetch_pcons(2024, "All") |>
       ) |>
       dplyr::mutate(
         # Renaming Welsh PCons by adding accents, matching names in fetch_pcons()
-        member_from = if_else(
+        member_from = dplyr::if_else(
           member_from == "Ynys Mon",
           "Ynys Môn", member_from),
-        member_from = if_else(
+        member_from = dplyr::if_else(
           member_from == "Montgomeryshire and Glyndwr",
           "Montgomeryshire and Glyndŵr", member_from),
         # setting case to lower case as case sensitivity is becoming an issue
@@ -185,15 +177,28 @@ mp_lookup <- mp_lookup |>
     )
   )
 
+# Add on Regions and Countries ================================================
+
+mp_lookup <- mp_lookup |>
+  dplyr::left_join(dfeR::geo_hierarchy |>
+    dplyr::select(
+      pcon_code,
+      region_name,
+      region_code,
+      country_name,
+      country_code,
+      ) |>
+    dplyr::distinct(pcon_code, .keep_all = TRUE),
+    by = "pcon_code"
+  )
+
 # Set a consistent order ======================================================
 mp_lookup <- dplyr::arrange(mp_lookup, pcon_code)
 
 # QA ==========================================================================
 expected_cols <- c(
-  "pcon_code",
   "pcon_name",
-  "country_code",
-  "country_name",
+  "pcon_code",
   "member_id",
   "full_title",
   "display_as",
@@ -208,7 +213,11 @@ expected_cols <- c(
   "new_la_codes_2024",
   "old_la_codes_2024",
   "mayoral_auth_names",
-  "mayoral_auth_codes"
+  "mayoral_auth_codes",
+  "region_name",
+  "region_code",
+  "country_name",
+  "country_code"
 )
 
 test_that("mp_lookup has expected columns", {
@@ -280,6 +289,20 @@ test_that("All constituency names are within the dfeR pcons", {
 test_that("All pcon codes are within the dfeR pcons", {
   dfeR_pcons <- dfeR::fetch_pcons(2024, "All")$pcon_code
   expect_true(all(mp_lookup$pcon_code %in% dfeR_pcons))
+})
+
+test_that("All region names are within the dfeR regions", {
+  dfeR_regions <- dfeR::fetch_regions()$region_name
+  # For Northern Ireland, Scotland, and Wales, use country name
+  dfeR_regions <- c(dfeR_regions, "Northern Ireland", "Scotland", "Wales")
+  expect_true(all(mp_lookup$region_name %in% dfeR_regions))
+})
+
+test_that("All region codes are within the dfeR regions", {
+  dfeR_regions <- dfeR::fetch_regions()$region_code
+  # For Northern Ireland, Scotland, and Wales, use country code
+  dfeR_regions <- c(dfeR_regions, "N92000002", "S92000003", "W92000004")
+  expect_true(all(mp_lookup$region_code %in% dfeR_regions))
 })
 
 test_that("All countries are within the dfeR countries", {
