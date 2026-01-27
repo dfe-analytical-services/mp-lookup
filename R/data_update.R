@@ -47,16 +47,18 @@ addresses <- data.frame(matrix(
 names(addresses) <- c("member_id", "member_email")
 
 mp_lookup <- mp_lookup |>
-  left_join(addresses, by = "member_id")
-
-mp_lookup <- mp_lookup |>
+  left_join(addresses, by = "member_id") |>
   dplyr::mutate(
     dplyr::across(
-      c(full_title, display_as, party_text),
+      c(member_id, full_title, display_as, party_text),
       ~ tidyr::replace_na(.x, "Vacant")
+    ),
+    member_email = case_when(
+      is.na(member_email) | member_email == "" ~ "No email found",
+      .default = member_email
     )
   ) |>
-  dplyr::select(-pcon_name_lower, member_id)
+  dplyr::select(-pcon_name_lower)
 
 # Read in election results and add them on ====================================
 election_results <- read.csv(
@@ -225,10 +227,14 @@ test_that("mp_lookup has expected columns", {
 })
 
 test_that("mp_lookup has no missing values in columns", {
-  for (col in expected_cols) {
-    expect_false(any(is.na(mp_lookup[[col]])))
-    expect_false(any(mp_lookup[[col]] == ""))
-  }
+  expect_equal(
+    mp_lookup |> dplyr::filter(if_any(everything(), is.na)) |> nrow(),
+    0
+  )
+  expect_equal(
+    mp_lookup |> dplyr::filter(if_any(everything(), ~ . == "")) |> nrow(),
+    0
+  )
 })
 
 test_that("No duplicates in key cols", {
