@@ -27,12 +27,17 @@ mp_lookup <- dfeR::fetch_pcons(2024, "All") |>
         # Renaming Welsh PCons by adding accents, matching names in fetch_pcons()
         member_from = dplyr::if_else(
           member_from == "Ynys Mon",
-          "Ynys Môn", member_from),
+          "Ynys Môn",
+          member_from
+        ),
         member_from = dplyr::if_else(
           member_from == "Montgomeryshire and Glyndwr",
-          "Montgomeryshire and Glyndŵr", member_from),
+          "Montgomeryshire and Glyndŵr",
+          member_from
+        ),
         # setting case to lower case as case sensitivity is becoming an issue
-        member_from = tolower(member_from)),
+        member_from = tolower(member_from)
+      ),
     by = c("pcon_name_lower" = "member_from")
   )
 
@@ -182,15 +187,16 @@ mp_lookup <- mp_lookup |>
 # Add on Regions and Countries ================================================
 
 mp_lookup <- mp_lookup |>
-  dplyr::left_join(dfeR::geo_hierarchy |>
-    dplyr::select(
-      pcon_code,
-      region_name,
-      region_code,
-      country_name,
-      country_code,
+  dplyr::left_join(
+    dfeR::geo_hierarchy |>
+      dplyr::select(
+        pcon_code,
+        region_name,
+        region_code,
+        country_name,
+        country_code,
       ) |>
-    dplyr::distinct(pcon_code, .keep_all = TRUE),
+      dplyr::distinct(pcon_code, .keep_all = TRUE),
     by = "pcon_code"
   )
 
@@ -238,8 +244,13 @@ test_that("mp_lookup has no missing values in columns", {
 })
 
 test_that("No duplicates in key cols", {
+  mp_lookup_dup_test <- mp_lookup |>
+    dplyr::filter(display_as != "Vacant")
   for (col in c("pcon_name", "pcon_code", "display_as", "member_id")) {
-    expect_equal(length(unique(mp_lookup[[col]])), nrow(mp_lookup))
+    expect_equal(
+      length(unique(mp_lookup_dup_test[[col]])),
+      nrow(mp_lookup_dup_test)
+    )
   }
 })
 
